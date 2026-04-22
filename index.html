@@ -273,6 +273,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic UI'
       <button class="qk" onclick="goto('scr-peri')"><span class="qk-ico">⚠️</span><span class="qk-txt">術前後<br>薬剤管理</span></button>
       <button class="qk" onclick="goto('scr-onj')"><span class="qk-ico">🦷</span><span class="qk-txt">ONJ/<br>AFF</span></button>
       <button class="qk" onclick="goto('scr-diag')"><span class="qk-ico">📋</span><span class="qk-txt">診断<br>基準</span></button>
+      <button class="qk" onclick="goto('scr-dvt')"><span class="qk-ico">💉</span><span class="qk-txt">DVT<br>予防</span></button>
     </div>
     <div class="tip-card" id="tip-card">
       <div class="tip-dot"></div>
@@ -708,17 +709,90 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic UI'
 </div>
 
 <!-- ============================
-     AO FRACTURE CLASSIFICATION
+     DVT PREVENTION
 ============================= -->
-<div class="screen" id="scr-ao">
+<div class="screen" id="scr-dvt">
   <div class="sub-hdr">
     <button class="back-btn" onclick="goBack()">‹ ホーム</button>
-    <div class="sub-hdr-title">骨折分類</div>
-    <div class="sub-hdr-sub">AO / Schatzker / Garden / Neer / Tile</div>
+    <div class="sub-hdr-title">DVT予防</div>
+    <div class="sub-hdr-sub">整形外科 周術期 抗凝固療法</div>
   </div>
   <div class="scroll-body">
-    <div class="filter-bar" id="ao-filter"></div>
-    <div id="ao-content"></div>
+
+    <div class="card">
+      <div class="card-hdr"><span class="badge br">術式別 薬剤・投与期間</span></div>
+      <div class="card-body">
+        <div class="lab-section-title">THA（人工股関節置換術）— 高リスク</div>
+        <div class="lab-item"><div><div class="lab-name">リバーロキサバン（イグザレルト）</div><div class="lab-note">術後6〜10時間後から開始</div></div><div class="lab-ref">10mg 1日1回<br>35日間</div></div>
+        <div class="lab-item"><div><div class="lab-name">エドキサバン（リクシアナ）</div><div class="lab-note">術後6〜24時間後から開始</div></div><div class="lab-ref">30mg 1日1回<br>35日間</div></div>
+        <div class="lab-item"><div><div class="lab-name">エノキサパリン（クレキサン）</div><div class="lab-note">術後24時間後から開始</div></div><div class="lab-ref">2000IU 1日2回<br>35日間</div></div>
+        <div class="lab-item"><div><div class="lab-name">フォンダパリヌクス（アリクストラ）</div><div class="lab-note">術後6〜8時間後から開始</div></div><div class="lab-ref">2.5mg 1日1回<br>35日間</div></div>
+
+        <div class="lab-section-title" style="margin-top:12px">TKA（人工膝関節置換術）— 高リスク</div>
+        <div class="lab-item"><div><div class="lab-name">リバーロキサバン（イグザレルト）</div><div class="lab-note">術後6〜10時間後から開始</div></div><div class="lab-ref">10mg 1日1回<br>14日間</div></div>
+        <div class="lab-item"><div><div class="lab-name">エドキサバン（リクシアナ）</div><div class="lab-note">術後6〜24時間後から開始</div></div><div class="lab-ref">30mg 1日1回<br>14日間</div></div>
+        <div class="lab-item"><div><div class="lab-name">エノキサパリン（クレキサン）</div><div class="lab-note">術後24時間後から開始</div></div><div class="lab-ref">2000IU 1日2回<br>14日間</div></div>
+        <div class="lab-item"><div><div class="lab-name">フォンダパリヌクス（アリクストラ）</div><div class="lab-note">術後6〜8時間後から開始</div></div><div class="lab-ref">2.5mg 1日1回<br>14日間</div></div>
+
+        <div class="lab-section-title" style="margin-top:12px">大腿骨近位部骨折手術</div>
+        <div class="lab-item"><div><div class="lab-name">エノキサパリン or フォンダパリヌクス</div><div class="lab-note">術後出血リスクとのバランスで開始時期を判断</div></div><div class="lab-ref">術後24時間後〜<br>14〜35日間</div></div>
+
+        <div class="lab-section-title" style="margin-top:12px">脊椎手術 — 出血リスク高</div>
+        <div class="lab-item"><div><div class="lab-name">機械的予防を主体に</div><div class="lab-note">弾性ストッキング＋フットポンプ。薬剤的予防は高リスク例のみ追加</div></div><div class="lab-ref">術後から<br>継続</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hdr"><span class="badge ba">術前 抗凝固薬・抗血小板薬の休薬</span></div>
+      <div class="card-body">
+        <div class="ir"><span class="il">DOAC全般</span>術前24〜48時間前に中止（腎機能正常の場合）</div>
+        <div class="ir"><span class="il">ワルファリン</span>術前5日前に中止。PT-INR確認（目標＜1.5）</div>
+        <div class="ir"><span class="il">アスピリン</span>術前7〜10日前。整形では継続することも多い。施設方針確認</div>
+        <div class="ir"><span class="il">クロピドグレル</span>術前5〜7日前に中止</div>
+        <div class="ir"><span class="il">再開時期</span>術後24〜48時間後。出血状況を確認してから</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hdr"><span class="badge br">腎機能低下時の注意（必ず確認）</span></div>
+      <div class="card-body">
+        <div class="ir"><span class="il">eGFR＜30</span>DOACは原則禁忌。エノキサパリンは半量（1000IU 1日2回）</div>
+        <div class="ir"><span class="il">eGFR＜20</span>フォンダパリヌクスも禁忌。機械的予防のみ</div>
+        <div class="ir"><span class="il">透析患者</span>薬剤的予防は原則困難。機械的予防＋血液専門医と相談</div>
+        <div style="background:rgba(255,107,107,0.1);border-radius:8px;padding:9px 11px;margin-top:8px;font-size:12px;color:var(--red)">
+          ⚠️ DOACは腎排泄。投与前にeGFR確認必須。特に高齢・大腿骨近位部骨折患者は腎機能低下例が多い
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hdr"><span class="badge bb">機械的予防（全例で考慮）</span></div>
+      <div class="card-body">
+        <div class="ir"><span class="il">弾性ストッキング</span>術前から装着。サイズ確認。皮膚トラブルに注意</div>
+        <div class="ir"><span class="il">フットポンプ</span>術中・術後早期から。薬剤的予防との併用が理想</div>
+        <div class="ir"><span class="il">早期離床</span>最も効果的な予防。術後翌日からのリハビリを積極的に</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hdr"><span class="badge bg">HIT（ヘパリン起因性血小板減少症）</span></div>
+      <div class="card-body">
+        <div class="ir"><span class="il">疑う状況</span>ヘパリン・エノキサパリン投与5〜14日後に血小板が50%以上低下</div>
+        <div class="ir"><span class="il">対応</span>直ちにヘパリン系薬剤を中止。血液内科またはICUに相談</div>
+        <div class="ir"><span class="il">代替薬</span>アルガトロバン（直接トロンビン阻害薬）へ切り替え</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hdr"><span class="badge bgr">DVT発症後の対応</span></div>
+      <div class="card-body">
+        <div class="ir"><span class="il">診断</span>下肢エコー（第一選択）。D-dimer上昇は感度高いが特異度低</div>
+        <div class="ir"><span class="il">近位型DVT</span>治療的抗凝固（DOAC or ヘパリン）。PEリスク高</div>
+        <div class="ir"><span class="il">遠位型DVT</span>施設方針による。観察 or 治療的抗凝固</div>
+        <div class="ir"><span class="il">PE疑い</span>造影CT。循環器内科または救急と連携</div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -744,9 +818,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic UI'
     <span class="nav-ico">💊</span>
     <span class="nav-lbl">処方</span>
   </button>
-  <button class="nav-btn" onclick="navTo('scr-ao',this);initAO()">
-    <span class="nav-ico">🗂️</span>
-    <span class="nav-lbl">骨折分類</span>
+  <button class="nav-btn" onclick="navTo('scr-eval',this)">
+    <span class="nav-ico">👤</span>
+    <span class="nav-lbl">患者評価</span>
   </button>
   <button class="nav-btn" onclick="gotoSearch()">
     <span class="nav-ico">🔍</span>
@@ -970,6 +1044,13 @@ const SEARCH_INDEX = [
   {name:'ONJ 顎骨壊死',sub:'予防・歯科紹介・対処法',action:()=>{goto('scr-onj')}},
   {name:'AFF 非定型大腿骨骨折',sub:'前駆症状・対側X線・BP中止・予防的髄内釘',action:()=>{goto('scr-onj')}},
   {name:'患者評価',sub:'YAM値・eGFR入力→推奨薬剤判定',action:()=>{goto('scr-eval')}},
+  {name:'DVT予防',sub:'THA・TKA・大腿骨近位部骨折・脊椎手術 抗凝固療法',action:()=>{goto('scr-dvt')}},
+  {name:'エノキサパリン クレキサン',sub:'DVT予防・術後24時間・腎機能注意',action:()=>{goto('scr-dvt')}},
+  {name:'リバーロキサバン イグザレルト',sub:'THA 35日・TKA 14日・術後6〜10時間',action:()=>{goto('scr-dvt')}},
+  {name:'エドキサバン リクシアナ',sub:'THA 35日・TKA 14日・術後6〜24時間',action:()=>{goto('scr-dvt')}},
+  {name:'フォンダパリヌクス アリクストラ',sub:'eGFR＜20禁忌・術後6〜8時間',action:()=>{goto('scr-dvt')}},
+  {name:'HIT ヘパリン起因性血小板減少症',sub:'5〜14日後・50%以上低下・アルガトロバンへ',action:()=>{goto('scr-dvt')}},
+  {name:'術前休薬 DOAC ワルファリン',sub:'24〜48時間・5日前・INR確認',action:()=>{goto('scr-dvt')}},
   {name:'ドラッグホリデー',sub:'BP 5年以上・休薬判断・再開基準',action:()=>{goto('scr-peri')}},
   {name:'デノスマブ中止 リバウンド',sub:'BP切り替え・6〜9ヶ月以内・多発椎体骨折',action:()=>{goto('scr-peri')}},
   {name:'逐次療法 シーケンシャル',sub:'テリパラチド終了後・ロモソズマブ終了後・BP移行',action:()=>{goto('scr-diag')}},
