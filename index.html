@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="OrthoRef">
@@ -29,18 +29,25 @@
   --rsm: 8px;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;overflow:hidden;background:var(--bg0)}
-body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic UI',sans-serif;color:var(--text1);font-size:15px;line-height:1.5}
+html{height:100%;height:-webkit-fill-available}
+html,body{overflow:hidden;background:var(--bg0)}
+body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic UI',sans-serif;color:var(--text1);font-size:15px;line-height:1.5;min-height:100vh;min-height:-webkit-fill-available}
 
 /* ======= APP SHELL ======= */
-#app{height:100vh;display:flex;flex-direction:column;max-width:430px;margin:0 auto;position:relative}
+#app{
+  height:100vh;height:100dvh;height:-webkit-fill-available;
+  display:flex;flex-direction:column;
+  max-width:430px;margin:0 auto;
+  position:relative;
+  overflow:hidden
+}
 .screen{display:none;flex:1;flex-direction:column;overflow:hidden}
 .screen.active{display:flex}
-.scroll-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px 14px;padding-bottom:24px}
+.scroll-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px 14px 24px}
 .scroll-body::-webkit-scrollbar{display:none}
 
 /* ======= HEADER ======= */
-.hdr{padding:52px 16px 14px;background:var(--bg0);position:relative}
+.hdr{padding:max(52px,env(safe-area-inset-top)) 16px 14px;background:var(--bg0);position:relative}
 .hdr-logo{display:flex;align-items:center;gap:9px;margin-bottom:14px}
 .hdr-icon{width:36px;height:36px;border-radius:10px;background:var(--acc);display:flex;align-items:center;justify-content:center;font-size:18px}
 .hdr-name{font-size:18px;font-weight:600;letter-spacing:-0.5px}
@@ -182,7 +189,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic UI'
 .lab-ref{text-align:right;font-size:11px;color:var(--text2);flex-shrink:0;margin-left:8px;line-height:1.5}
 
 /* ======= BOTTOM NAV ======= */
-.bottom-nav{display:flex;background:rgba(13,27,42,0.95);border-top:0.5px solid var(--border);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);padding-bottom:env(safe-area-inset-bottom)}
+.bottom-nav{display:flex;flex-shrink:0;background:rgba(13,27,42,0.97);border-top:0.5px solid var(--border);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);padding-bottom:env(safe-area-inset-bottom)}
 .nav-btn{flex:1;padding:8px 2px 9px;border:none;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;-webkit-user-select:none}
 .nav-ico{font-size:20px;line-height:1;transition:transform .15s}
 .nav-lbl{font-size:9px;color:var(--text3);letter-spacing:0.3px;transition:color .15s}
@@ -196,7 +203,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic UI'
 .flt-btn.on{background:rgba(45,125,210,0.2);border-color:var(--acc);color:var(--acc2)}
 
 /* ======= SCREEN HEADER ======= */
-.sub-hdr{padding:52px 16px 14px;background:var(--bg0)}
+.sub-hdr{padding:max(52px,env(safe-area-inset-top)) 16px 14px;background:var(--bg0)}
 .sub-hdr-title{font-size:20px;font-weight:700;letter-spacing:-0.5px}
 .sub-hdr-sub{font-size:13px;color:var(--text2);margin-top:3px}
 .back-btn{display:inline-flex;align-items:center;gap:4px;color:var(--acc2);font-size:14px;background:none;border:none;cursor:pointer;margin-bottom:12px;padding:0;-webkit-user-select:none}
@@ -701,8 +708,29 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic UI'
 </div>
 
 <!-- ============================
+     AO FRACTURE CLASSIFICATION
+============================= -->
+<div class="screen" id="scr-ao">
+  <div class="sub-hdr">
+    <button class="back-btn" onclick="goBack()">‹ ホーム</button>
+    <div class="sub-hdr-title">骨折分類</div>
+    <div class="sub-hdr-sub">AO / Schatzker / Garden / Neer / Tile</div>
+  </div>
+  <div class="scroll-body">
+    <div class="filter-bar" id="ao-filter"></div>
+    <div id="ao-content"></div>
+  </div>
+</div>
+
+<!-- ============================
      BOTTOM NAV
 ============================= -->
+
+<!-- ADD TO HOME SCREEN BANNER -->
+<div id='add-banner' style='display:none;background:#2D7DD2;padding:10px 16px;flex-shrink:0;align-items:center;justify-content:space-between;flex-shrink:0'>
+  <div style='font-size:12px;color:white;line-height:1.5'>📱 <b>ホーム画面に追加</b>すると<br>アプリとして快適に使えます</div>
+  <button onclick="document.getElementById('add-banner').style.display='none'" style='color:rgba(255,255,255,0.8);font-size:20px;background:none;border:none;cursor:pointer;padding:0 0 0 14px'>×</button>
+</div>
 <div class="bottom-nav">
   <button class="nav-btn active" onclick="navTo('scr-home',this)">
     <span class="nav-ico">🏠</span>
@@ -710,15 +738,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic UI'
   </button>
   <button class="nav-btn" onclick="navTo('scr-hip',this)">
     <span class="nav-ico">🦴</span>
-    <span class="nav-lbl">大腿骨FLS</span>
+    <span class="nav-lbl">FLS</span>
   </button>
   <button class="nav-btn" onclick="navTo('scr-drugs',this)">
     <span class="nav-ico">💊</span>
     <span class="nav-lbl">処方</span>
   </button>
-  <button class="nav-btn" onclick="navTo('scr-eval',this)">
-    <span class="nav-ico">👤</span>
-    <span class="nav-lbl">患者評価</span>
+  <button class="nav-btn" onclick="navTo('scr-ao',this);initAO()">
+    <span class="nav-ico">🗂️</span>
+    <span class="nav-lbl">骨折分類</span>
   </button>
   <button class="nav-btn" onclick="gotoSearch()">
     <span class="nav-ico">🔍</span>
@@ -994,11 +1022,240 @@ function setGreeting() {
   if(tx) tx.textContent = tip.text;
 }
 
+// ========= AO CLASSIFICATION DATA =========
+const AO_PARTS = [
+  {id:'ankle', label:'足関節'},
+  {id:'radius', label:'橈骨遠位端'},
+  {id:'femur_neck', label:'大腿骨頸部'},
+  {id:'femur_troch', label:'大腿骨転子部'},
+  {id:'tibia', label:'脛骨プラトー'},
+  {id:'humerus', label:'上腕骨近位部'},
+  {id:'pelvis', label:'骨盤'},
+  {id:'spine', label:'胸腰椎'},
+];
+
+const AO_DATA = {
+  ankle: {
+    name: '足関節骨折',
+    system: 'Danis-Weber 分類（AO 44）',
+    intro: '腓骨骨折の高さと脛腓靭帯結合・下腿間膜の損傷程度で分類。内果・後果の合併が予後に影響。',
+    types: [
+      { label: 'Weber A', code: 'AO 44-A', color: 'bg', title: '脛腓靭帯結合以遠の腓骨骨折', desc: '下腿間膜・靭帯結合は正常。安定型が多い。転位なし → 保存療法（ギプス4〜6週）。転位あり → ORIF', pearl: '内果骨折を伴う場合（Bimalleolar相当）は不安定になりやすく手術適応を考慮' },
+      { label: 'Weber B', code: 'AO 44-B', color: 'ba', title: '脛腓靭帯結合レベルの腓骨骨折', desc: '下腿間膜損傷は部分的。安定性は内果骨折・靭帯損傷の有無で決まる。内果骨折合併（Bimalleolar）→ ORIF', pearl: '術中コットン試験（側方引き出し）で靭帯結合不安定性を確認。Trimalleolar（後果）は後果骨折が>25%なら固定' },
+      { label: 'Weber C', code: 'AO 44-C', color: 'br', title: '脛腓靭帯結合以近の腓骨骨折', desc: '下腿間膜・靭帯結合損傷あり。距骨の外方転位リスク高。原則ORIF（腓骨プレート固定＋靭帯結合固定を検討）', pearl: 'Maisonneuve骨折：足関節外旋外力で腓骨近位部骨折＋内果/三角靭帯損傷。足関節X線だけでは見落とす → 下腿全長X線を撮影' },
+    ],
+    extra: [
+      { title: 'Lauge-Hansen分類との対応', body: 'SA（回外-内転）、SE（回外-外旋）、PA（回内-外転）、PE（回内-外旋）。Weber B は主に SE型、Weber C は PA/PE型。' },
+      { title: '後果骨折の評価', body: 'CTで後果骨折の大きさ（>25%の関節面占有）を確認。大きい場合は固定により安定性向上と関節適合性改善が期待できる。' },
+    ]
+  },
+  radius: {
+    name: '橈骨遠位端骨折',
+    system: 'AO 分類（23型）',
+    intro: '関節内骨折か否か、粉砕の程度で治療方針が変わる。Colles型（背側転位）が最多。不安定骨折の判断基準が重要。',
+    types: [
+      { label: '23-A', code: '関節外骨折', color: 'bg', title: '関節面を侵さない骨折', desc: 'A1: 尺骨のみ / A2: 単純橈骨（Colles型：背側転位・短縮）/ A3: 粉砕橈骨。転位なし → ギプス固定3〜4週。転位あり → 徒手整復＋ギプス', pearl: '不安定骨折の基準：背側傾斜>10°、橈骨短縮>3mm、橈骨傾斜<15°、粉砕あり。これらは再転位リスク高くORIFを検討' },
+      { label: '23-B', code: '部分関節内骨折', color: 'ba', title: '関節面の一部が侵された骨折', desc: 'B1: 橈骨矢状面骨折 / B2: 背側縁骨折（背側Barton）/ B3: 掌側縁骨折（掌側Barton・Smith型）。基本的にORIF適応', pearl: '掌側Barton（B3）は手根骨が骨片と共に掌側に転位する剪断骨折。見落としやすい。側面X線で確認' },
+      { label: '23-C', code: '完全関節内骨折', color: 'br', title: '関節面が完全に骨幹端から分離', desc: 'C1: 単純関節内・単純骨幹端 / C2: 単純関節内・粉砕骨幹端 / C3: 粉砕関節内。関節内転位>2mmでORIF。CT撮影で詳細評価', pearl: 'C3は掌側ロッキングプレートの適応。高エネルギー損傷では正中神経・TFCC損傷合併に注意。術後早期リハビリが重要' },
+    ],
+    extra: [
+      { title: '術式の選択', body: '掌側ロッキングプレート（VLP）が標準。橈骨短縮・尺骨変異（正の尺骨変異）はTFCC・DRUJ障害の原因となる。' },
+      { title: 'Smith骨折との鑑別', body: 'Colles型（背側転位）と逆方向に転位（掌側転位）。側面X線で確認。掌側ロッキングプレートでの固定が標準。' },
+    ]
+  },
+  femur_neck: {
+    name: '大腿骨頸部骨折',
+    system: 'Garden 分類（AO 31-B）',
+    intro: '骨頭血流温存の可能性と転位の程度で手術方法を決定。高齢者では早期手術・早期離床が生命予後に直結する。',
+    types: [
+      { label: 'Garden I', code: '不全骨折', color: 'bg', title: '外反嵌入骨折（valgus impaction）', desc: '骨頭が外反方向に嵌入。骨頭血流は比較的保たれる。治療：骨接合術（CCS 3本 or 2本）または保存療法（転位リスクを考慮）', pearl: '「安全な骨折」ではない。骨接合せずに全荷重すると転位・骨頭壊死リスク。側面X線で後方傾斜（>20°）があれば骨接合推奨' },
+      { label: 'Garden II', code: '完全骨折・転位なし', color: 'bg', title: '骨折線は完全だが骨頭は転位していない', desc: '骨頭血流は保たれやすい。治療：骨接合術（CCS 3本平行固定）', pearl: 'Garden I/IIをまとめて「安定型（undisplaced）」と分類することが多い。若年者・活動性の高い患者では積極的に骨接合' },
+      { label: 'Garden III', code: '完全骨折・部分転位', color: 'ba', title: '骨折＋骨頭が部分的に転位', desc: '骨頭血流が障害されるリスクあり。治療：高齢者（65〜75歳以上）→ 人工骨頭置換術（BHA）。若年者（60歳以下）→ 緊急骨接合（6〜12時間以内）', pearl: 'Garden III/IVをまとめて「不安定型（displaced）」と分類。骨頭壊死リスク：転位型で30〜40%。BHAの選択は活動性・全身状態・寿命を考慮' },
+      { label: 'Garden IV', code: '完全骨折・完全転位', color: 'br', title: '骨頭が完全に転位（外旋・短縮）', desc: '骨頭血流が最も障害される。骨頭壊死リスク最高（40〜80%）。治療：BHA or THA。若年者では最大限の骨接合を試みるが壊死リスクを説明', pearl: 'THA vs BHA：両側TKA既往・RA・寛骨臼に問題がある場合はTHA。一般的な高齢股関節骨折はBHA（セメントまたは無セメント）' },
+    ],
+    extra: [
+      { title: '骨頭壊死の時期', body: '骨接合後3〜24ヶ月で発生。前方アプローチが後方より壊死率低い（後方の血管：深大腿動脈の後方外側上行枝）。' },
+      { title: '手術タイミング', body: '48時間以内の手術で死亡率・合併症率が低下。全身状態の許す限り早期手術を目指す。' },
+    ]
+  },
+  femur_troch: {
+    name: '大腿骨転子部・転子下骨折',
+    system: 'Evans 分類 / Seinsheimer 分類（AO 31-A）',
+    intro: '転子部骨折（AO 31-A）の安定性判断と、転子下骨折（AO 32）の認識が重要。全例手術適応が原則。',
+    types: [
+      { label: 'Evans A1', code: '安定型（2骨片）', color: 'bg', title: '内側皮質の支持が保たれた2骨片骨折', desc: '小転子付着部が無傷または一体型。整復後に内側皮質が接触しサポートされる。治療：SHS（Dynamic Hip Screw）or 髄内釘', pearl: 'SHSはA1型で有効。Lag screwの位置（TAD≤25mm、tip-apex距離）が切れ出し（cut-out）防止の鍵' },
+      { label: 'Evans A2', code: '不安定型（内側壁消失）', color: 'ba', title: '小転子骨折＋内側壁の消失した粉砕骨折', desc: '内側皮質サポートなし。Lag screwの効果が限定的。治療：髄内釘（gamma nail、PFNA等）が推奨', pearl: 'A2からA3への判断：逆斜め骨折（A3）はDHSではコントロール不能。骨折線の方向をX線・CTで確認する' },
+      { label: 'Evans A3', code: '不安定型（逆斜め）', color: 'br', title: '逆斜め骨折または転子間-転子下骨折', desc: '骨折線が内側から外側・遠位へ向かう。DHSは禁忌（骨片が内反変形に）。治療：髄内釘必須（long gamma nail）', pearl: '見落としやすい：正面X線で逆斜め骨折と転子部骨折を区別。術中透視で骨折線の方向を確認してから器械選択' },
+      { label: 'Seinsheimer II〜V', code: '転子下骨折', color: 'br', title: '小転子下5cmまでの骨折（AO 32型）', desc: '筋肉牽引（腸腰筋による近位骨片屈曲外転）で整復困難なことが多い。治療：ロングstem髄内釘（long gamma nail等）', pearl: '近位骨片の肢位：屈曲・外転・外旋。手術時は骨折端の正確な整復と釘の入射点確保が難しい。経験ある術者が担当を' },
+    ],
+    extra: [
+      { title: 'TAD（Tip-Apex Distance）', body: 'Lag screwの先端から骨頭頂点までの距離（正面＋側面）。25mm以下でcut-outリスク激減。lag screwはできるだけ骨頭中心に。' },
+      { title: 'Lag screw vs Helical blade', body: 'Helical blade（PFNAなど）は骨粗鬆症骨に有利。Lag screwより骨の圧排効果があり、引き抜き力が高い。' },
+    ]
+  },
+  tibia: {
+    name: '脛骨プラトー骨折',
+    system: 'Schatzker 分類（AO 41-B/C）',
+    intro: '高エネルギー損傷ほど複雑（Schatzker IV〜VI）。コンパートメント症候群・血管損傷・靭帯損傷の合併評価が重要。全例CT撮影を推奨。',
+    types: [
+      { label: 'Schatzker I', code: '外側楔状骨折（転位あり）', color: 'bg', title: '外側脛骨プラトーの純粋楔状骨折', desc: '陥没なし。外側転位・関節不適合あり。治療：ORIF（スクリュー or 外側プレート）。若年者・骨質良好例に多い', pearl: '内側副靭帯・ACLの合併損傷を評価（Valgus stress test・MRI）。外側メニスカスの嵌頓に注意' },
+      { label: 'Schatzker II', code: '外側楔状＋陥没骨折', color: 'bg', title: '外側プラトーの楔状骨折と関節面陥没の合併', desc: '最も頻度が高い。陥没>4〜5mm or 骨折転位→ORIF（陥没骨の挙上・骨移植・外側プレート）', pearl: '術前CTで陥没範囲を正確に評価。Clam-shell technique（外側皮質を開いて陥没骨を押し上げ）が基本術式' },
+      { label: 'Schatzker III', code: '外側純粋陥没骨折', color: 'ba', title: '外側関節面のみの陥没（楔状骨折なし）', desc: '高齢者・骨粗鬆症例に多い。陥没>4〜5mmかつ不安定性あり → 手術。軽度なら保存療法可', pearl: 'CT・MRIで陥没の位置と深さを確認。後方の陥没は前方アプローチでは挙上困難。アプローチを工夫する必要あり' },
+      { label: 'Schatzker IV', code: '内側コンダイル骨折', color: 'br', title: '内側脛骨プラトーの骨折（高エネルギー）', desc: '膝の内反損傷。腓骨神経・膝窩動脈損傷の合併リスクが高い。基本的にORIF', pearl: '腓骨神経損傷：最初に神経学的評価（足背屈・趾伸展）。血管損傷疑い（ABI<0.9、拍動減弱）→ 即座に血管外科コンサルト' },
+      { label: 'Schatzker V', code: '両顆骨折', color: 'br', title: '内外側両方のプラトーが侵された骨折', desc: '高エネルギー損傷。骨幹端まで骨折線が及ぶことが多い。治療：仮固定（外固定器）→ 軟部組織改善後ORIF（通常7〜14日後）', pearl: 'コンパートメント症候群のリスクが高い。4コンパートメント計測と注意深い観察が必要' },
+      { label: 'Schatzker VI', code: '骨幹端-骨端離解', color: 'br', title: 'プラトー骨折が骨幹端まで及ぶ（最重症）', desc: '高エネルギー。軟部組織損傷が高度。治療：外固定器で仮固定 → 腫脹軽減後 ORIF or 外固定継続', pearl: 'Staged approach が標準。最初はspanning external fixatorで整復・固定。7〜14日後に内固定（MIPO等）' },
+    ],
+    extra: [
+      { title: 'コンパートメント症候群', body: '特にSchatzker I・IVで発生しやすい。6 Ps（Pain, Pressure, Paresthesia, Paralysis, Pallor, Pulselessness）。圧≥30mmHg or ΔP≤30mmHgで筋膜切開。' },
+      { title: 'MRIの役割', body: 'ACL・PCL・半月板損傷の評価に有用。特にSchatzker II〜IIIで外側半月板損傷が多い。術前評価に推奨。' },
+    ]
+  },
+  humerus: {
+    name: '上腕骨近位部骨折',
+    system: 'Neer 分類（AO 11-A/B/C）',
+    intro: '4骨片（骨頭・大結節・小結節・骨幹部）の転位数で分類。腋窩神経・腋窩動脈損傷の評価が必須。高齢者の骨粗鬆症性骨折が多い。',
+    types: [
+      { label: 'Neer 1 part', code: '転位なし（全4骨片）', color: 'bg', title: 'どの骨片も>1cm転位または>45°回旋なし', desc: '最多（約80%）。治療：保存療法（三角巾2〜3週 → 早期リハビリ）。疼痛管理が重要', pearl: '「転位なし」でも三角巾を長くしすぎると拘縮。2〜3週後から振り子運動・他動運動開始が原則' },
+      { label: 'Neer 2 part', code: '1箇所の骨折線（転位あり）', color: 'ba', title: '外科頸・大結節・小結節のいずれか1つが転位', desc: '外科頸2-part: 若年・活動性高 → ORIF（髄内釘or近位プレート）。高齢・低活動 → 保存可。大結節>5mm転位 → ORIF（腱板引きによる）', pearl: '大結節骨折は腱板（棘上筋・棘下筋・小円筋）が付着。>5mm転位で肩峰下インピンジメント・腱板機能不全のリスク' },
+      { label: 'Neer 3 part', code: '2箇所の骨折線（転位あり）', color: 'br', title: '大結節または小結節＋外科頸の骨折', desc: '骨頭の一部は外科頸骨幹部から離れる。治療：ORIF（ロッキングプレート）or 人工骨頭（高齢者・骨粗鬆症高度）', pearl: '骨頭の回旋ズレを整復することが難しい。術前CT（3D再構成）で骨折パターンを把握して手術計画を' },
+      { label: 'Neer 4 part', code: '3箇所の骨折線（骨頭孤立）', color: 'br', title: '骨頭が完全に孤立した4骨片骨折', desc: '骨頭血流が高度に障害される。骨頭壊死リスク：50〜90%。高齢者 → 人工骨頭（BHA or リバース型TSA）。若年者 → ORIF挑戦', pearl: 'リバース人工肩関節（RSA）：腱板が機能しない例・複雑骨折に有効。国内でも適応拡大中。術前に肩関節外科医との相談を' },
+    ],
+    extra: [
+      { title: '腋窩神経損傷', body: '三角筋外側の感覚低下・三角筋筋力低下で評価。骨折時の合併が多い。多くは一過性（neurapraxia）で3〜4ヶ月で回復するが、EMGでフォロー。' },
+      { title: 'AO分類との対応', body: 'AO 11-A（関節外）= Neer 1〜2 part、11-B（関節内部分）= Neer 3 part、11-C（完全関節内）= Neer 4 part。' },
+    ]
+  },
+  pelvis: {
+    name: '骨盤骨折',
+    system: 'Tile 分類 / AO 分類',
+    intro: '骨盤後輪（仙腸関節・仙骨）の損傷程度で安定性を分類。大量出血・腹部臓器損傷の合併評価と止血が最優先。整形外科だけでなく外傷外科・IVRとの連携が必須。',
+    types: [
+      { label: 'Tile A（安定型）', code: 'AO 61-A', color: 'bg', title: '後輪が無傷。骨盤輪の安定性を保つ', desc: 'A1: 骨盤輪を侵さない骨折（腸骨翼・坐骨枝）/ A2: 骨盤輪骨折・転位なし / A3: 仙骨横走・尾骨骨折。治療：保存療法（ベッド安静 → 荷重）', pearl: '見落とし注意：坐骨枝骨折は立位X線で見やすい。腸骨翼骨折は骨盤外の直達外力（打撲）でも発生' },
+      { label: 'Tile B（部分不安定）', code: 'AO 61-B', color: 'ba', title: '後輪部分損傷。垂直方向は安定', desc: 'B1: Open book型（外旋力）恥骨結合離開＋前仙腸靭帯損傷 / B2: 側方圧迫型（lateral compression）/ B3: 両側B型。B1で開き>2.5cm → 外固定器・恥骨結合ORIF', pearl: 'Open book骨折（B1）の止血：骨盤輪を閉じること（シーツラッピング・TPOD）が第一。後腹膜の骨盤内血腫が自然填塞する' },
+      { label: 'Tile C（完全不安定）', code: 'AO 61-C', color: 'br', title: '後輪完全損傷。垂直・回旋ともに不安定', desc: '仙腸関節完全脱臼 or 仙骨骨折＋前輪損傷。C1: 片側 / C2: 両側一側C型 / C3: 両側C型 or 寛骨臼合併。治療：外固定 → 全身状態安定後に ORIF or IVR', pearl: '骨盤C型骨折の死亡率は20〜50%。「Damage Control Orthopedics」が基本。緊急外固定→止血（腹膜前填塞 or IVR塞栓術）→後日内固定' },
+    ],
+    extra: [
+      { title: '出血管理のプロトコル', body: '骨盤骨折の出血は主に静脈叢（80〜85%）。大量輸血プロトコル（MTP）を発動。動脈出血（15〜20%）はIVRが有効。' },
+      { title: '腹膜前填塞（PPP）', body: 'Retzius腔に填塞を入れ骨盤内静脈叢を圧迫止血。IVRのない施設や時間的余裕のない状況で有効。近年日本でも普及。' },
+    ]
+  },
+  spine: {
+    name: '胸腰椎骨折',
+    system: 'AO Magerl 分類 / TLICS スコア',
+    intro: '骨折形態・後縦靭帯複合体（PLC）の損傷・神経症状の3要素でTLICSスコアを算出し手術適応を決定。',
+    types: [
+      { label: 'A型（圧迫）', code: '椎体圧迫骨折', color: 'bg', title: '椎体が圧縮・破裂する骨折（後方要素は正常）', desc: 'A1: 終板骨折（楔状変形）/ A2: 矢状・冠状面亀裂 / A3: 破裂骨折（burst、後壁関与）。A1は保存療法。A3は骨折形態・神経症状でORIF検討', pearl: 'Burst骨折（A3）でも神経症状がなくPLCが正常なら保存療法が可能な症例もある。TLICSで総合判断' },
+      { label: 'B型（牽引）', code: '後方要素が損傷', color: 'ba', title: '前後要素が牽引・剪断される骨折（PLC損傷）', desc: 'B1: 骨性損傷（Chance骨折）→ 過屈曲・シートベルト損傷 / B2: 靭帯性後方損傷 / B3: 過伸展損傷。PLC損傷のため手術適応が多い', pearl: 'Chance骨折（B1）：シートベルト外傷。腹腔内臓器損傷（腸管・膵）の合併を積極的にCT・外科コンサルトで除外する' },
+      { label: 'C型（回旋）', code: '回旋不安定性', color: 'br', title: 'A型またはB型に回旋力が加わった最重症骨折', desc: '全方向に不安定。A/B型に比べ脊髄損傷・多発損傷の合併が多い。治療：後方固定（長節術式）が基本', pearl: 'C型は軸性解離性損傷を含む。高位損傷では胸腹部臓器・大血管損傷を合併するため全身管理が優先' },
+    ],
+    extra: [
+      { title: 'TLICSスコアの計算', body: '【骨折形態】圧迫:1点、破裂:2点、牽引:3点、回旋/剪断:4点\n【PLC】正常:0点、疑い:2点、損傷:3点\n【神経症状】正常:0点、神経根:1点、完全麻痺:2点、不完全麻痺:3点\n→ 合計 ≤3点:保存 / 4点:どちらも可 / ≥5点:手術' },
+      { title: '後縦靭帯複合体（PLC）評価', body: 'MRI T2で高信号（棘間靭帯・棘上靭帯・関節包の損傷を示す）。臨床的には棘突起間の離開・圧痛で推定。PLCの損傷は不安定性の根拠となり手術適応に強く影響。' },
+    ]
+  }
+};
+
+let aoPartSelected = 'ankle';
+
+function initAO() {
+  renderAOFilter();
+  renderAOContent();
+}
+
+function renderAOFilter() {
+  const el = document.getElementById('ao-filter');
+  if(!el) return;
+  el.innerHTML = AO_PARTS.map(p =>
+    `<button class="flt-btn ${p.id===aoPartSelected?'on':''}" onclick="setAOPart('${p.id}')">${p.label}</button>`
+  ).join('');
+}
+
+function setAOPart(id) {
+  aoPartSelected = id;
+  renderAOFilter();
+  renderAOContent();
+}
+
+function renderAOContent() {
+  const el = document.getElementById('ao-content');
+  if(!el) return;
+  const data = AO_DATA[aoPartSelected];
+  if(!data) return;
+
+  const colorMap = {bg:'background:rgba(61,220,132,0.1);border:0.5px solid rgba(61,220,132,0.25)',ba:'background:rgba(255,179,71,0.1);border:0.5px solid rgba(255,179,71,0.25)',br:'background:rgba(255,107,107,0.1);border:0.5px solid rgba(255,107,107,0.25)'};
+  const textMap = {bg:'color:#3DDC84',ba:'color:#FFB347',br:'color:#FF6B6B'};
+
+  let html = `
+    <div style="background:rgba(45,125,210,0.1);border:0.5px solid rgba(45,125,210,0.3);border-radius:12px;padding:11px 13px;margin-bottom:10px">
+      <div style="font-size:13px;font-weight:600;color:#48A9F8;margin-bottom:3px">${data.name}</div>
+      <div style="font-size:11px;color:var(--text2);margin-bottom:4px">${data.system}</div>
+      <div style="font-size:12px;color:var(--text2);line-height:1.6">${data.intro}</div>
+    </div>`;
+
+  data.types.forEach((t, i) => {
+    html += `
+    <div class="drug-list-item" id="ao-item-${aoPartSelected}-${i}">
+      <div class="dli-header" onclick="toggleAO('${aoPartSelected}',${i})">
+        <div style="flex:1">
+          <div style="display:flex;align-items:center;gap:7px;margin-bottom:2px">
+            <span style="${colorMap[t.color]||colorMap.bg};${textMap[t.color]||textMap.bg};padding:3px 8px;border-radius:6px;font-size:11px;font-weight:600">${t.label}</span>
+            <span style="font-size:11px;color:var(--text3)">${t.code}</span>
+          </div>
+          <div style="font-size:13px;font-weight:500;color:var(--text1)">${t.title}</div>
+        </div>
+        <span style="color:var(--text3);font-size:16px;margin-left:8px" id="ao-arr-${aoPartSelected}-${i}">›</span>
+      </div>
+      <div class="dli-detail" id="ao-dd-${aoPartSelected}-${i}">
+        <div style="font-size:13px;color:var(--text1);line-height:1.6;margin-bottom:8px">${t.desc}</div>
+        <div style="background:rgba(45,125,210,0.08);border-radius:8px;padding:9px 11px">
+          <div style="font-size:10px;font-weight:600;color:var(--acc2);margin-bottom:3px;text-transform:uppercase;letter-spacing:0.5px">Clinical Pearl</div>
+          <div style="font-size:12px;color:var(--text2);line-height:1.6">${t.pearl}</div>
+        </div>
+      </div>
+    </div>`;
+  });
+
+  if(data.extra && data.extra.length) {
+    data.extra.forEach(ex => {
+      html += `
+      <div class="drug-list-item">
+        <div class="dli-header" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.arr-ex').style.transform=this.nextElementSibling.classList.contains('open')?'rotate(90deg)':''">
+          <div>
+            <div style="font-size:13px;font-weight:500">${ex.title}</div>
+          </div>
+          <span class="arr-ex" style="color:var(--text3);font-size:16px;transition:transform .2s">›</span>
+        </div>
+        <div class="dli-detail">
+          <div style="font-size:12px;color:var(--text2);line-height:1.7;white-space:pre-line">${ex.body}</div>
+        </div>
+      </div>`;
+    });
+  }
+
+  el.innerHTML = html;
+}
+
+function toggleAO(part, i) {
+  const dd = document.getElementById(`ao-dd-${part}-${i}`);
+  const arr = document.getElementById(`ao-arr-${part}-${i}`);
+  if(!dd) return;
+  const isOpen = dd.classList.toggle('open');
+  if(arr) arr.style.transform = isOpen ? 'rotate(90deg)' : '';
+}
+
 // ========= INIT =========
 document.addEventListener('DOMContentLoaded', () => {
   setGreeting();
   renderDrugFilter();
   renderDrugs();
+
+  // Show add-to-home-screen banner in browser mode
+  if(!window.navigator.standalone && /iPhone|iPad|iPod/.test(navigator.userAgent)){
+    const b = document.getElementById('add-banner');
+    if(b && !localStorage.getItem('banner-closed')){ b.style.display='flex'; }
+    const btn = b && b.querySelector('button');
+    if(btn) btn.addEventListener('click',()=>localStorage.setItem('banner-closed','1'));
+  }
   if('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(() => {});
   }
