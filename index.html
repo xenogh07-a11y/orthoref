@@ -66,8 +66,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic UI'
 .sc{border-radius:var(--r);padding:15px 13px 13px;cursor:pointer;display:flex;flex-direction:column;gap:5px;border:none;text-align:left;min-height:100px;position:relative;transition:transform .12s,opacity .12s;-webkit-user-select:none}
 .sc:active{transform:scale(0.96);opacity:0.85}
 .sc-ico{font-size:26px;line-height:1;margin-bottom:3px}
-.sc-title{font-size:13px;font-weight:600;line-height:1.3}
-.sc-sub{font-size:11px;opacity:0.7;line-height:1.4}
+.sc-title{font-size:13px;font-weight:700;line-height:1.3;color:#FFFFFF}
+.sc-sub{font-size:11px;line-height:1.4;color:rgba(255,255,255,0.85)}
 .sc-hip{background:linear-gradient(135deg,#1E3A8A,#1E5FA5)}
 .sc-vert{background:linear-gradient(135deg,#1E5FA5,#0F6E56)}
 .sc-drug{background:linear-gradient(135deg,#4A1B8A,#2D7DD2)}
@@ -89,12 +89,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic UI'
 .card-hdr{padding:11px 13px;border-bottom:0.5px solid var(--border);display:flex;align-items:center;gap:7px}
 .card-body{padding:12px 13px}
 .badge{display:inline-block;padding:3px 8px;border-radius:20px;font-size:10px;font-weight:500;letter-spacing:0.2px}
-.bb{background:rgba(45,125,210,0.2);color:#48A9F8}
-.bg{background:rgba(61,220,132,0.15);color:#3DDC84}
-.ba{background:rgba(255,179,71,0.15);color:#FFB347}
-.br{background:rgba(255,107,107,0.15);color:#FF6B6B}
-.bt{background:rgba(72,200,248,0.15);color:#48C8F8}
-.bgr{background:rgba(139,164,191,0.12);color:#8BA4BF}
+.bb{background:rgba(45,125,210,0.18);color:#2D7DD2}
+.bg{background:rgba(61,220,132,0.15);color:#27A865}
+.ba{background:rgba(255,179,71,0.18);color:#C47D00}
+.br{background:rgba(255,107,107,0.18);color:#D63031}
+.bt{background:rgba(72,200,248,0.15);color:#0984B8}
+.bgr{background:rgba(139,164,191,0.15);color:#5A7A96}
 
 /* ======= CHECKLIST ======= */
 .cl{padding:2px 0}
@@ -172,7 +172,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic UI'
 .rec-card.success{background:rgba(61,220,132,0.08);border:0.5px solid rgba(61,220,132,0.2)}
 .rec-card.warn{background:rgba(255,179,71,0.1);border:0.5px solid rgba(255,179,71,0.3)}
 .rec-title{font-size:13px;font-weight:600;margin-bottom:8px}
-.rec-item{display:flex;gap:8px;padding:8px 0;border-bottom:0.5px solid rgba(255,255,255,0.06)}
+.rec-item{display:flex;gap:8px;padding:8px 0;border-bottom:0.5px solid rgba(255,255,255,0.1)}
 .rec-item:last-child{border-bottom:none}
 .rec-rank{font-size:10px;font-weight:600;padding:2px 6px;border-radius:4px;flex-shrink:0;margin-top:2px;letter-spacing:0.2px}
 .rec-name{font-size:13px;font-weight:500}
@@ -273,6 +273,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic UI'
       <button class="qk" onclick="goto('scr-peri')"><span class="qk-ico">⚠️</span><span class="qk-txt">術前後<br>薬剤管理</span></button>
       <button class="qk" onclick="goto('scr-onj')"><span class="qk-ico">🦷</span><span class="qk-txt">ONJ/<br>AFF</span></button>
       <button class="qk" onclick="goto('scr-diag')"><span class="qk-ico">📋</span><span class="qk-txt">診断<br>基準</span></button>
+      <button class="qk" onclick="goto('scr-2nd')"><span class="qk-ico">🔍</span><span class="qk-txt">二次性<br>鑑別</span></button>
       <button class="qk" onclick="goto('scr-dvt')"><span class="qk-ico">💉</span><span class="qk-txt">DVT<br>予防</span></button>
     </div>
     <div class="tip-card" id="tip-card">
@@ -692,6 +693,78 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic UI'
   </div>
 </div>
 
+
+<!-- ============================
+     SECONDARY OSTEOPOROSIS
+============================= -->
+<div class="screen" id="scr-2nd">
+  <div class="sub-hdr">
+    <button class="back-btn" onclick="goBack()">‹ ホーム</button>
+    <div class="sub-hdr-title">二次性骨粗鬆症</div>
+    <div class="sub-hdr-sub">鑑別診断・採血結果の解釈</div>
+  </div>
+  <div class="scroll-body">
+
+    <div class="card">
+      <div class="card-hdr"><span class="badge br">必ず除外すべき疾患</span></div>
+      <div class="card-body">
+        <div class="ir"><span class="il">悪性腫瘍</span>多発性骨髄腫・骨転移（前立腺・乳腺・肺・腎・甲状腺）</div>
+        <div class="ir"><span class="il">内分泌</span>副甲状腺機能亢進症 / クッシング症候群 / 甲状腺機能亢進症 / 性腺機能低下症</div>
+        <div class="ir"><span class="il">代謝性</span>骨軟化症 / VitD欠乏症 / 慢性腎臓病（CKD-MBD）</div>
+        <div class="ir"><span class="il">薬剤性</span>ステロイド / アロマターゼ阻害薬 / GnRHアゴニスト / 抗てんかん薬 / PPIの長期投与</div>
+        <div class="ir"><span class="il">消化器</span>吸収不良症候群 / 胃切除後 / 炎症性腸疾患</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hdr"><span class="badge ba">採血結果の解釈フロー</span></div>
+      <div class="card-body">
+        <div class="lab-section-title">高Ca血症（補正Ca＞10.4）</div>
+        <div class="ir"><span class="il">PTH 高値</span>原発性副甲状腺機能亢進症 → 頸部エコー・シンチ</div>
+        <div class="ir"><span class="il">PTH 低値</span>悪性腫瘍（骨転移・PTHrP産生腫瘍）/ サルコイドーシス</div>
+
+        <div class="lab-section-title" style="margin-top:12px">低Ca血症（補正Ca＜8.4）</div>
+        <div class="ir"><span class="il">PTH 高値</span>続発性副甲状腺機能亢進症 → VitD欠乏・CKDを確認</div>
+        <div class="ir"><span class="il">PTH 低値</span>副甲状腺機能低下症 / 術後（甲状腺・副甲状腺手術後）</div>
+
+        <div class="lab-section-title" style="margin-top:12px">ALP 高値</div>
+        <div class="ir"><span class="il">骨型BAP↑</span>骨粗鬆症・Paget病・骨転移・骨軟化症</div>
+        <div class="ir"><span class="il">肝型↑</span>肝疾患 → AST/ALT/γGTPと合わせて評価</div>
+
+        <div class="lab-section-title" style="margin-top:12px">25-OHD 低値（＜20 ng/mL）</div>
+        <div class="ir"><span class="il">対応</span>天然型VitD（コレカルシフェロール等）で補充してから再検。補充後も低値なら吸収不良を疑う</div>
+
+        <div class="lab-section-title" style="margin-top:12px">intact PTH 高値（＞65 pg/mL）</div>
+        <div class="ir"><span class="il">eGFR 正常</span>原発性副甲状腺機能亢進症 → 高Ca確認 → 内分泌内科</div>
+        <div class="ir"><span class="il">eGFR 低下</span>続発性副甲状腺機能亢進症（CKD-MBD）→ 腎臓内科</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hdr"><span class="badge bb">疾患別 追加検査</span></div>
+      <div class="card-body">
+        <div class="ir"><span class="il">骨髄腫</span>蛋白分画（Mピーク）・BJP（尿）・免疫電気泳動・血清FLC比 → 血液内科</div>
+        <div class="ir"><span class="il">クッシング</span>早朝コルチゾール・夜間コルチゾール・デキサメサゾン抑制試験 → 内分泌内科</div>
+        <div class="ir"><span class="il">甲状腺機能亢進</span>TSH↓ / FT3・FT4↑ → 甲状腺エコー → 内科</div>
+        <div class="ir"><span class="il">性腺機能低下（男性）</span>血清テストステロン（早朝空腹時）→ ＜250 ng/dL で低値</div>
+        <div class="ir"><span class="il">骨軟化症</span>低P・低25-OHD・ALP↑。X線でLooser帯。FGF23測定も</div>
+        <div class="ir"><span class="il">吸収不良</span>低Alb・低Ca・低P・低25-OHD。消化器内科へ</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hdr"><span class="badge bg">薬剤性骨粗鬆症（GIOP以外）</span></div>
+      <div class="card-body">
+        <div class="ir"><span class="il">アロマターゼ阻害薬</span>乳癌治療中の閉経後女性。骨密度低下が急速。BP or デノスマブを積極的に</div>
+        <div class="ir"><span class="il">GnRHアゴニスト</span>前立腺癌・子宮内膜症。性ホルモン低下→骨密度低下。BP or デノスマブを</div>
+        <div class="ir"><span class="il">抗てんかん薬</span>VitD代謝促進→骨軟化症。VitD補充を積極的に</div>
+        <div class="ir"><span class="il">PPI長期投与</span>Ca吸収低下。リスク因子として認識。Ca・VitD補充を確認</div>
+        <div class="ir"><span class="il">ループ利尿薬</span>Ca尿中排泄↑。長期使用で骨密度低下</div>
+      </div>
+    </div>
+
+  </div>
+</div>
 <!-- ============================
      SEARCH
 ============================= -->
@@ -833,19 +906,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic UI'
 <script>
 // ========= DRUG DATA =========
 const DRUGS = [
-  {id:'zona',cat:'bp',name:'ゾレドロン酸',brand:'リクラスト',dose:'5mg 年1回（点滴 30分以上）',note:'骨折後2週以内推奨（HORIZON試験）。eGFR≥35必須。低Ca補正後に施行。インフル様症状3日程度',rx:'ゾレドロン酸注 5mg/100mL\n1バッグ 点滴静注（30分以上かけて）\n年 1回\n※施行前：Ca・eGFR確認必須'},
-  {id:'alen',cat:'bp',name:'アレンドロネート',brand:'フォサマック / ボナロン',dose:'35mg 週1回（内服）',note:'食前30分・水200mL以上。服用後30分は横にならない。食道障害注意。eGFR＜35は禁忌',rx:'アレンドロン酸錠 35mg\n1錠 週1回 起床時（食前30分以上前）\n※服用後30分は横にならないよう指導'},
-  {id:'rise',cat:'bp',name:'リセドロネート',brand:'アクトネル / ベネット',dose:'17.5mg 週1回 or 75mg 月1回（内服）',note:'食前30分。胃部症状比較的少ない。eGFR＜30は禁忌',rx:'リセドロン酸錠 17.5mg\n1錠 週1回 起床時（食前30分以上前）'},
-  {id:'mino',cat:'bp',name:'ミノドロン酸',brand:'ボノテオ / リカルボン',dose:'50mg 月1回（内服）',note:'食後2時間以上。eGFR＜30は禁忌',rx:'ミノドロン酸錠 50mg\n1錠 月1回 食後2時間以上経過後'},
-  {id:'iban',cat:'bp',name:'イバンドロネート',brand:'ボンビバ',dose:'100mg 月1回（内服）or 1mg/月（注射）',note:'内服は食前1時間。注射製剤でアドヒアランス向上',rx:'イバンドロン酸錠 100mg\n1錠 月1回 食前1時間\n※注射製剤：1mg/月 皮下または静脈内注射'},
-  {id:'deno',cat:'rankl',name:'デノスマブ',brand:'プラリア',dose:'60mg 6ヶ月毎（皮下注）',note:'中止後リバウンドに注意→必ずBPへ移行。低Ca補正してから施行。ONJリスク。腎機能低下でも使用可',rx:'プラリア皮下注 60mgシリンジ\n60mg 皮下注射\n6ヶ月毎\n※施行前：Ca・25-OHD確認'},
-  {id:'fort',cat:'pth',name:'テリパラチド（毎日）',brand:'フォルテオ',dose:'20μg/日 皮下注 最長24ヶ月',note:'高骨折リスクに優先。骨形成促進。生涯2年上限。終了後逐次療法必須。起立性低血圧注意（初回投与後）',rx:'フォルテオ皮下注キット 28日分\n20μg 1日1回 皮下注射（自己注射）\n※残期間確認：生涯24ヶ月上限'},
-  {id:'terb',cat:'pth',name:'テリパラチド（週1回）',brand:'テリボン',dose:'56.5μg 週1回 皮下注 最長24ヶ月',note:'週1回で管理しやすい。効果・上限はフォルテオと同等。自己注射指導必要',rx:'テリボン皮下注オートインジェクター\n56.5μg 週1回 皮下注射（自己注射）\n※残期間確認：生涯24ヶ月上限'},
-  {id:'romo',cat:'sost',name:'ロモソズマブ',brand:'イベニティ',dose:'210mg 月1回（皮下注）× 12ヶ月',note:'骨形成促進＋骨吸収抑制の二重効果。心血管イベント既往は禁忌。12ヶ月後はBP or デノスマブへ必ず移行',rx:'イベニティ皮下注 105mgシリンジ\n2本（210mg）月1回 皮下注射\n計12ヶ月\n※施行前：Ca・心血管既往確認'},
-  {id:'ralo',cat:'serm',name:'ラロキシフェン',brand:'エビスタ',dose:'60mg/日（内服）',note:'閉経後女性のみ。深部静脈血栓リスク注意。椎体骨折予防に有効',rx:'ラロキシフェン塩酸塩錠 60mg\n1錠 1日1回（食事に関係なく可）'},
-  {id:'baze',cat:'serm',name:'バゼドキシフェン',brand:'ビビアント',dose:'20mg/日（内服）',note:'閉経後女性のみ。ラロキシフェンより血栓リスクやや低。椎体骨折予防',rx:'バゼドキシフェン酢酸塩錠 20mg\n1錠 1日1回'},
-  {id:'alph',cat:'other',name:'アルファカルシドール',brand:'アルファロール 他',dose:'0.5〜1μg/日（内服）',note:'活性型VitD3。高Ca血症モニタリング必要。転倒予防効果の報告あり',rx:'アルファカルシドールカプセル 0.5μg\n1〜2カプセル 1日1回'},
-  {id:'mena',cat:'other',name:'メナテトレノン',brand:'グラケー',dose:'45mg/日 食後（内服）',note:'VitK2製剤。ワルファリン内服中は禁忌。椎体骨折予防の補助',rx:'メナテトレノンカプセル 15mg\n3カプセル 1日3回 食後'},
+  {id:'zona',cat:'bp',name:'ゾレドロン酸（リクラスト）',brand:'年1回 点滴',dose:'5mg 年1回（点滴 30分以上）',note:'骨折後2週以内推奨（HORIZON試験）。eGFR≥35必須。低Ca補正後に施行。インフル様症状3日程度',rx:'ゾレドロン酸注 5mg/100mL\n1バッグ 点滴静注（30分以上かけて）\n年 1回\n※施行前：Ca・eGFR確認必須'},
+  {id:'alen',cat:'bp',name:'アレンドロネート（フォサマック）',brand:'週1回 内服',dose:'35mg 週1回（内服）',note:'食前30分・水200mL以上。服用後30分は横にならない。食道障害注意。eGFR＜35は禁忌',rx:'アレンドロン酸錠 35mg\n1錠 週1回 起床時（食前30分以上前）\n※服用後30分は横にならないよう指導'},
+  {id:'rise',cat:'bp',name:'リセドロネート（アクトネル）',brand:'週1回 or 月1回 内服',dose:'17.5mg 週1回 or 75mg 月1回（内服）',note:'食前30分。胃部症状比較的少ない。eGFR＜30は禁忌',rx:'リセドロン酸錠 17.5mg\n1錠 週1回 起床時（食前30分以上前）'},
+  {id:'mino',cat:'bp',name:'ミノドロン酸（ボノテオ）',brand:'月1回 内服',dose:'50mg 月1回（内服）',note:'食後2時間以上。eGFR＜30は禁忌',rx:'ミノドロン酸錠 50mg\n1錠 月1回 食後2時間以上経過後'},
+  {id:'iban',cat:'bp',name:'イバンドロネート（ボンビバ）',brand:'月1回 内服 or 注射',dose:'100mg 月1回（内服）or 1mg/月（注射）',note:'内服は食前1時間。注射製剤でアドヒアランス向上',rx:'イバンドロン酸錠 100mg\n1錠 月1回 食前1時間\n※注射製剤：1mg/月 皮下または静脈内注射'},
+  {id:'deno',cat:'rankl',name:'デノスマブ（プラリア）',brand:'6ヶ月毎 皮下注',dose:'60mg 6ヶ月毎（皮下注）',note:'中止後リバウンドに注意→必ずBPへ移行。低Ca補正してから施行。ONJリスク。腎機能低下でも使用可',rx:'プラリア皮下注 60mgシリンジ\n60mg 皮下注射\n6ヶ月毎\n※施行前：Ca・25-OHD確認'},
+  {id:'fort',cat:'pth',name:'テリパラチド毎日製剤（フォルテオ）',brand:'1日1回 皮下注',dose:'20μg/日 皮下注 最長24ヶ月',note:'高骨折リスクに優先。骨形成促進。生涯2年上限。終了後逐次療法必須。起立性低血圧注意（初回投与後）',rx:'フォルテオ皮下注キット 28日分\n20μg 1日1回 皮下注射（自己注射）\n※残期間確認：生涯24ヶ月上限'},
+  {id:'terb',cat:'pth',name:'テリパラチド週1回製剤（テリボン）',brand:'週1回 皮下注',dose:'56.5μg 週1回 皮下注 最長24ヶ月',note:'週1回で管理しやすい。効果・上限はフォルテオと同等。自己注射指導必要',rx:'テリボン皮下注オートインジェクター\n56.5μg 週1回 皮下注射（自己注射）\n※残期間確認：生涯24ヶ月上限'},
+  {id:'romo',cat:'sost',name:'ロモソズマブ（イベニティ）',brand:'月1回×12ヶ月 皮下注',dose:'210mg 月1回（皮下注）× 12ヶ月',note:'骨形成促進＋骨吸収抑制の二重効果。心血管イベント既往は禁忌。12ヶ月後はBP or デノスマブへ必ず移行',rx:'イベニティ皮下注 105mgシリンジ\n2本（210mg）月1回 皮下注射\n計12ヶ月\n※施行前：Ca・心血管既往確認'},
+  {id:'ralo',cat:'serm',name:'ラロキシフェン（エビスタ）',brand:'1日1回 内服',dose:'60mg/日（内服）',note:'閉経後女性のみ。深部静脈血栓リスク注意。椎体骨折予防に有効',rx:'ラロキシフェン塩酸塩錠 60mg\n1錠 1日1回（食事に関係なく可）'},
+  {id:'baze',cat:'serm',name:'バゼドキシフェン（ビビアント）',brand:'1日1回 内服',dose:'20mg/日（内服）',note:'閉経後女性のみ。ラロキシフェンより血栓リスクやや低。椎体骨折予防',rx:'バゼドキシフェン酢酸塩錠 20mg\n1錠 1日1回'},
+  {id:'alph',cat:'other',name:'アルファカルシドール（アルファロール）',brand:'1日1回 内服',dose:'0.5〜1μg/日（内服）',note:'活性型VitD3。高Ca血症モニタリング必要。転倒予防効果の報告あり',rx:'アルファカルシドールカプセル 0.5μg\n1〜2カプセル 1日1回'},
+  {id:'mena',cat:'other',name:'メナテトレノン（グラケー）',brand:'食後 1日3回 内服',dose:'45mg/日 食後（内服）',note:'VitK2製剤。ワルファリン内服中は禁忌。椎体骨折予防の補助',rx:'メナテトレノンカプセル 15mg\n3カプセル 1日3回 食後'},
 ];
 
 const CAT_LABELS = {bp:'BP製剤',rankl:'RANKL阻害薬',pth:'PTH系',sost:'抗スクレロスチン抗体',serm:'SERM',other:'補助薬'};
@@ -993,11 +1066,11 @@ function calcRec() {
   if(giop==='low' && yam && yam < 80) indicated = true;
 
   if(prev==='deno') {
-    document.getElementById('eval-output').innerHTML = `<div class="rec-card danger"><div class="rec-title" style="color:var(--red)">⚠️ デノスマブ中止後：リバウンド対策</div><div class="rec-item"><span class="rec-rank" style="background:rgba(45,125,210,0.2);color:var(--acc2)">必須</span><div><div class="rec-name">ビスホスホネート製剤</div><div class="rec-note">最終投与から6〜9ヶ月以内に開始。遅延は多発椎体骨折リスク</div></div></div></div>`;
+    document.getElementById('eval-output').innerHTML = `<div class="rec-card danger"><div class="rec-title" style="color:var(--red)">⚠️ デノスマブ中止後：リバウンド対策</div><div class="rec-item"><span class="rec-rank" style="background:rgba(30,95,165,0.9);color:#FFFFFF">必須</span><div><div class="rec-name">ビスホスホネート製剤</div><div class="rec-note">最終投与から6〜9ヶ月以内に開始。遅延は多発椎体骨折リスク</div></div></div></div>`;
     return;
   }
   if(prev==='anab') {
-    document.getElementById('eval-output').innerHTML = `<div class="rec-card primary"><div class="rec-title" style="color:var(--acc2)">骨形成促進薬終了後の逐次療法</div><div class="rec-item"><span class="rec-rank" style="background:rgba(45,125,210,0.2);color:var(--acc2)">必須</span><div><div class="rec-name">ビスホスホネート or デノスマブ</div><div class="rec-note">獲得した骨密度を維持するため直ちに開始</div></div></div></div>`;
+    document.getElementById('eval-output').innerHTML = `<div class="rec-card primary"><div class="rec-title" style="color:var(--acc2)">骨形成促進薬終了後の逐次療法</div><div class="rec-item"><span class="rec-rank" style="background:rgba(30,95,165,0.9);color:#FFFFFF">必須</span><div><div class="rec-name">ビスホスホネート or デノスマブ</div><div class="rec-note">獲得した骨密度を維持するため直ちに開始</div></div></div></div>`;
     return;
   }
   if(!indicated) {
@@ -1012,18 +1085,18 @@ function calcRec() {
 
   if(high) {
     html += `<div class="rec-card danger"><div class="rec-title" style="color:var(--red)">高骨折リスク — 骨形成促進薬を優先</div>`;
-    if(cv!=='yes') html += `<div class="rec-item"><span class="rec-rank" style="background:rgba(255,107,107,0.2);color:#FF9898">第一選択</span><div><div class="rec-name">ロモソズマブ（イベニティ）</div><div class="rec-note">210mg/月×12ヶ月。心血管既往なければ最優先。終了後BP/デノスマブへ</div></div></div>`;
-    html += `<div class="rec-item"><span class="rec-rank" style="background:rgba(255,107,107,0.2);color:#FF9898">${cv==='yes'?'第一選択':'代替'}</span><div><div class="rec-name">テリパラチド（フォルテオ/テリボン）</div><div class="rec-note">最長24ヶ月。骨癒合促進の報告あり。生涯2年上限に注意</div></div></div>`;
+    if(cv!=='yes') html += `<div class="rec-item"><span class="rec-rank" style="background:rgba(200,50,50,0.85);color:#FFFFFF">第一選択</span><div><div class="rec-name">ロモソズマブ（イベニティ）</div><div class="rec-note">210mg/月×12ヶ月。心血管既往なければ最優先。終了後BP/デノスマブへ</div></div></div>`;
+    html += `<div class="rec-item"><span class="rec-rank" style="background:rgba(200,50,50,0.85);color:#FFFFFF">${cv==='yes'?'第一選択':'代替'}</span><div><div class="rec-name">テリパラチド（フォルテオ/テリボン）</div><div class="rec-note">最長24ヶ月。骨癒合促進の報告あり。生涯2年上限に注意</div></div></div>`;
     html += `</div>`;
   }
 
   html += `<div class="rec-card primary"><div class="rec-title" style="color:var(--acc2)">${high?'逐次療法（骨形成促進薬終了後） / 中等度リスク':'推奨薬剤'}</div>`;
-  if(egfr>=30) html += `<div class="rec-item"><span class="rec-rank" style="background:rgba(45,125,210,0.2);color:var(--acc2)">BP製剤</span><div><div class="rec-name">アレンドロネート・リセドロネート・ゾレドロン酸 等</div><div class="rec-note">腎機能・剤形・アドヒアランスに応じて選択。eGFR確認必須</div></div></div>`;
-  html += `<div class="rec-item"><span class="rec-rank" style="background:rgba(72,200,248,0.15);color:#48C8F8">${egfr<30?'優先':'RANKL'}</span><div><div class="rec-name">デノスマブ（プラリア）</div><div class="rec-note">腎機能低下でも使用可。中止管理に注意</div></div></div>`;
-  if(sex==='f'&&!high&&giop==='none') html += `<div class="rec-item"><span class="rec-rank" style="background:rgba(255,179,71,0.15);color:var(--amber)">SERM</span><div><div class="rec-name">ラロキシフェン / バゼドキシフェン</div><div class="rec-note">閉経後女性・椎体骨折予防。血栓リスク確認</div></div></div>`;
-  if(giop==='high') html += `<div class="rec-item"><span class="rec-rank" style="background:rgba(255,179,71,0.15);color:var(--amber)">GIOP重症</span><div><div class="rec-name">テリパラチドも選択肢</div><div class="rec-note">骨形成抑制が強いGIOPに有効</div></div></div>`;
+  if(egfr>=30) html += `<div class="rec-item"><span class="rec-rank" style="background:rgba(30,95,165,0.9);color:#FFFFFF">BP製剤</span><div><div class="rec-name">アレンドロネート・リセドロネート・ゾレドロン酸 等</div><div class="rec-note">腎機能・剤形・アドヒアランスに応じて選択。eGFR確認必須</div></div></div>`;
+  html += `<div class="rec-item"><span class="rec-rank" style="background:rgba(9,132,184,0.85);color:#FFFFFF">${egfr<30?'優先':'RANKL'}</span><div><div class="rec-name">デノスマブ（プラリア）</div><div class="rec-note">腎機能低下でも使用可。中止管理に注意</div></div></div>`;
+  if(sex==='f'&&!high&&giop==='none') html += `<div class="rec-item"><span class="rec-rank" style="background:rgba(196,125,0,0.9);color:#FFFFFF">SERM</span><div><div class="rec-name">ラロキシフェン / バゼドキシフェン</div><div class="rec-note">閉経後女性・椎体骨折予防。血栓リスク確認</div></div></div>`;
+  if(giop==='high') html += `<div class="rec-item"><span class="rec-rank" style="background:rgba(196,125,0,0.9);color:#FFFFFF">GIOP重症</span><div><div class="rec-name">テリパラチドも選択肢</div><div class="rec-note">骨形成抑制が強いGIOPに有効</div></div></div>`;
   html += `</div>`;
-  html += `<div class="rec-card success"><div class="rec-title" style="color:var(--green)">全例で考慮：基礎補助療法</div><div class="rec-item"><span class="rec-rank" style="background:rgba(61,220,132,0.1);color:var(--green)">基礎</span><div><div class="rec-name">活性型VitD3（アルファカルシドール等）</div><div class="rec-note">25-OHD＜20は天然型で補充後に活性型へ。Ca摂取600〜800mg/日を食事で</div></div></div></div>`;
+  html += `<div class="rec-card success"><div class="rec-title" style="color:var(--green)">全例で考慮：基礎補助療法</div><div class="rec-item"><span class="rec-rank" style="background:rgba(39,160,100,0.9);color:#FFFFFF">基礎</span><div><div class="rec-name">活性型VitD3（アルファカルシドール等）</div><div class="rec-note">25-OHD＜20は天然型で補充後に活性型へ。Ca摂取600〜800mg/日を食事で</div></div></div></div>`;
 
   document.getElementById('eval-output').innerHTML = html;
 }
@@ -1058,6 +1131,13 @@ const SEARCH_INDEX = [
   {name:'GIOP ステロイド性骨粗鬆症',sub:'PSL 3mg・5mg・治療開始基準',action:()=>{goto('scr-diag')}},
   {name:'YAM値',sub:'診断基準・70%・80%・60%',action:()=>{goto('scr-diag')}},
   {name:'eGFR 腎機能',sub:'BP禁忌・35・30・デノスマブ',action:()=>{goto('scr-lab')}},
+  {name:'二次性骨粗鬆症',sub:'鑑別・除外診断・採血結果の解釈フロー',action:()=>{goto('scr-2nd')}},
+  {name:'副甲状腺機能亢進症',sub:'高Ca・PTH高値・原発性・続発性',action:()=>{goto('scr-2nd')}},
+  {name:'クッシング症候群',sub:'コルチゾール・デキサメサゾン抑制試験',action:()=>{goto('scr-2nd')}},
+  {name:'骨髄腫 多発性骨髄腫',sub:'蛋白分画・Mピーク・BJP・FLC',action:()=>{goto('scr-2nd')}},
+  {name:'骨軟化症',sub:'低P・低VitD・Looser帯・FGF23',action:()=>{goto('scr-2nd')}},
+  {name:'薬剤性骨粗鬆症',sub:'アロマターゼ阻害薬・GnRH・抗てんかん薬・PPI',action:()=>{goto('scr-2nd')}},
+  {name:'高Ca血症 低Ca血症',sub:'PTH・補正Ca・採血結果フロー',action:()=>{goto('scr-2nd')}},
 ];
 
 let srItems = [];
