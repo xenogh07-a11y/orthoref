@@ -1,4 +1,4 @@
-const CACHE = 'orthoref-v2';
+const CACHE = 'orthoref-v3';
 const BASE = '/orthoref/';
 const ASSETS = [
   BASE,
