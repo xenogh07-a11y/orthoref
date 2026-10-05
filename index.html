@@ -278,6 +278,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic UI'
     </div>
     <div class="quick-row" style="margin-top:8px">
       <button class="qk" onclick="goto('scr-spine')" style="flex:none;width:calc(50% - 4px)"><span class="qk-ico">🧠</span><span class="qk-txt" style="font-size:11px">脊椎疾患<br>処方テンプレ</span></button>
+      <button class="qk" onclick="goto('scr-renal')" style="flex:none;width:calc(50% - 4px)"><span class="qk-ico">🫘</span><span class="qk-txt" style="font-size:11px">腎機能別<br>使用可否</span></button>
     </div>
     <div class="tip-card" id="tip-card">
       <div class="tip-dot"></div>
@@ -873,6 +874,85 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic UI'
 </div>
 
 <!-- ============================
+     RENAL DOSING
+============================= -->
+<div class="screen" id="scr-renal">
+  <div class="sub-hdr">
+    <button class="back-btn" onclick="goBack()">‹ ホーム</button>
+    <div class="sub-hdr-title">腎機能別 使用可否</div>
+    <div class="sub-hdr-sub">eGFRを入力して確認</div>
+  </div>
+  <div class="scr-body">
+
+    <!-- eGFR入力 -->
+    <div class="card" style="margin-bottom:12px">
+      <div class="card-hdr"><span class="badge bb">eGFR入力</span></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:4px 0 8px">
+        <input type="number" id="renal-egfr" placeholder="例：45" min="0" max="150"
+          style="width:100px;padding:10px 12px;background:var(--bg2);border:1px solid var(--acc);border-radius:8px;color:var(--text1);font-size:18px;font-weight:700;text-align:center"
+          oninput="updateRenalTable()">
+        <span style="color:var(--text2);font-size:14px">mL/min/1.73m²</span>
+      </div>
+      <div id="renal-zone-label" style="font-size:13px;color:var(--text2);padding-top:2px"></div>
+    </div>
+
+    <!-- 骨粗鬆症薬 -->
+    <div class="card" style="margin-bottom:12px">
+      <div class="card-hdr" style="margin-bottom:8px"><span class="badge bb">骨粗鬆症薬</span></div>
+      <table id="renal-table-osteo" style="width:100%;border-collapse:collapse;font-size:13px">
+        <thead>
+          <tr style="color:var(--text2);border-bottom:1px solid var(--bg2)">
+            <th style="text-align:left;padding:6px 4px;font-weight:600;width:42%">薬剤</th>
+            <th style="text-align:center;padding:6px 4px;font-weight:600;width:28%">閾値</th>
+            <th style="text-align:center;padding:6px 4px;font-weight:600;width:30%">判定</th>
+          </tr>
+        </thead>
+        <tbody id="renal-tbody-osteo"></tbody>
+      </table>
+    </div>
+
+    <!-- DVT予防薬 -->
+    <div class="card" style="margin-bottom:12px">
+      <div class="card-hdr" style="margin-bottom:8px"><span class="badge br">DVT予防薬</span></div>
+      <table style="width:100%;border-collapse:collapse;font-size:13px">
+        <thead>
+          <tr style="color:var(--text2);border-bottom:1px solid var(--bg2)">
+            <th style="text-align:left;padding:6px 4px;font-weight:600;width:42%">薬剤</th>
+            <th style="text-align:center;padding:6px 4px;font-weight:600;width:28%">閾値</th>
+            <th style="text-align:center;padding:6px 4px;font-weight:600;width:30%">判定</th>
+          </tr>
+        </thead>
+        <tbody id="renal-tbody-dvt"></tbody>
+      </table>
+    </div>
+
+    <!-- 脊椎疾患薬 -->
+    <div class="card" style="margin-bottom:12px">
+      <div class="card-hdr" style="margin-bottom:8px"><span class="badge ba">脊椎疾患薬</span></div>
+      <table style="width:100%;border-collapse:collapse;font-size:13px">
+        <thead>
+          <tr style="color:var(--text2);border-bottom:1px solid var(--bg2)">
+            <th style="text-align:left;padding:6px 4px;font-weight:600;width:42%">薬剤</th>
+            <th style="text-align:center;padding:6px 4px;font-weight:600;width:28%">閾値</th>
+            <th style="text-align:center;padding:6px 4px;font-weight:600;width:30%">判定</th>
+          </tr>
+        </thead>
+        <tbody id="renal-tbody-spine"></tbody>
+      </table>
+    </div>
+
+    <!-- 凡例 -->
+    <div style="display:flex;gap:12px;flex-wrap:wrap;padding:4px 0 16px;font-size:12px;color:var(--text2)">
+      <span><span style="color:#3DDC84;font-weight:700">●</span> 使用可</span>
+      <span><span style="color:#FFB347;font-weight:700">●</span> 注意・減量</span>
+      <span><span style="color:#FF6B6B;font-weight:700">●</span> 禁忌</span>
+      <span><span style="color:var(--text3);font-weight:700">–</span> eGFR未入力</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================
      SPINE PRESCRIPTION
 ============================= -->
 <div class="screen" id="scr-spine">
@@ -944,9 +1024,96 @@ const DRUGS = [
   // ── 補助薬 ──
   {id:'alph',cat:'other',name:'アルファカルシドール（アルファロール）',brand:'1日1回 内服',dose:'0.5〜1μg/日（内服）',note:'活性型VitD3。高Ca血症モニタリング必要。転倒予防効果の報告あり',rx:'アルファカルシドールカプセル 0.5μg\n1〜2カプセル 1日1回'},
   {id:'mena',cat:'other',name:'メナテトレノン（グラケー）',brand:'食後 1日3回 内服',dose:'45mg/日 食後（内服）',note:'VitK2製剤。ワルファリン内服中は禁忌。椎体骨折予防の補助',rx:'メナテトレノンカプセル 15mg\n3カプセル 1日3回 食後'},
+  {id:'denota',cat:'other',name:'デノタスチュアブル配合錠（炭酸Ca＋VitD3）',brand:'1日1回 食後 内服',dose:'2錠/日（炭酸Ca 500mg×2＋コレカルシフェロール 400IU×2）',note:'デノスマブ（プラリア）使用時の低Ca血症・低VitD予防として原則併用。他のCa製剤・VitD製剤との重複投与に注意。噛み砕いて服用可（チュアブル）。便秘・胃部不快感に注意',rx:'デノタスチュアブル配合錠\n2錠 1日1回 食後（噛み砕いて服用）\n※プラリア投与時の低Ca予防として併用'},
 ];
 
 const CAT_LABELS = {bp:'BP製剤',rankl:'RANKL阻害薬',pth:'PTH系',sost:'抗スクレロスチン抗体',serm:'SERM',other:'補助薬'};
+
+// ── 腎機能別使用可否データ ──
+const RENAL_DRUGS = {
+  osteo: [
+    {name:'ゾレドロン酸（リクラスト）', threshold:'eGFR≥35', ok:v=>v>=35, caution:null, note:'eGFR＜35は禁忌'},
+    {name:'アレンドロン酸（フォサマック）', threshold:'eGFR≥35', ok:v=>v>=35, caution:null, note:'eGFR＜35は禁忌'},
+    {name:'リセドロン酸（アクトネル）', threshold:'eGFR≥30', ok:v=>v>=30, caution:null, note:'eGFR＜30は禁忌'},
+    {name:'ミノドロン酸（ボノテオ）', threshold:'eGFR≥30', ok:v=>v>=30, caution:null, note:'eGFR＜30は禁忌'},
+    {name:'イバンドロン酸（ボンビバ）', threshold:'eGFR≥30', ok:v=>v>=30, caution:null, note:'eGFR＜30は禁忌'},
+    {name:'デノスマブ（プラリア）', threshold:'制限なし', ok:v=>true, caution:null, note:'腎機能問わず使用可。低Ca・デノタス必須'},
+    {name:'テリパラチド（フォルテオ/テリボン）', threshold:'制限なし', ok:v=>true, caution:null, note:'腎機能による禁忌なし'},
+    {name:'アバロパラチド（オスタバロ）', threshold:'制限なし', ok:v=>true, caution:null, note:'腎機能による禁忌なし'},
+    {name:'ロモソズマブ（イベニティ）', threshold:'制限なし', ok:v=>true, caution:null, note:'腎機能による禁忌なし。心血管既往に注意'},
+    {name:'ラロキシフェン（エビスタ）', threshold:'制限なし', ok:v=>true, caution:null, note:'重度腎障害は慎重投与'},
+    {name:'アルファカルシドール（アルファロール）', threshold:'制限なし', ok:v=>true, caution:null, note:'高Ca血症モニタリング。腎機能低下例ほど注意'},
+  ],
+  dvt: [
+    {name:'エドキサバン（リクシアナ）', threshold:'eGFR 15〜50で減量', ok:v=>v>=50, caution:v=>v>=15&&v<50, note:'15〜50：30mg/日に減量。＜15：禁忌'},
+    {name:'リバーロキサバン（イグザレルト）', threshold:'eGFR≥15', ok:v=>v>=50, caution:v=>v>=15&&v<50, note:'eGFR＜15：禁忌。15〜49：慎重投与'},
+    {name:'アピキサバン（エリキュース）', threshold:'eGFR≥25推奨', ok:v=>v>=50, caution:v=>v>=25&&v<50, note:'透析患者への使用は添付文書確認'},
+    {name:'エノキサパリン（クレキサン）', threshold:'eGFR≥30', ok:v=>v>=30, caution:null, note:'eGFR＜30：半量（1000IU 1日2回）に減量'},
+    {name:'フォンダパリヌクス（アリクストラ）', threshold:'eGFR≥20', ok:v=>v>=20, caution:null, note:'eGFR＜20：禁忌。出血リスク高い'},
+  ],
+  spine: [
+    {name:'プレガバリン（リリカ）', threshold:'eGFR≥60通常量', ok:v=>v>=60, caution:v=>v>=30&&v<60, note:'eGFR 30〜59：25〜75mg/日に減量。＜30：さらに減量or禁忌'},
+    {name:'ミロガバリン（タリージェ）', threshold:'eGFR≥60通常量', ok:v=>v>=60, caution:v=>v>=30&&v<60, note:'eGFR 30〜59：用量調整要。添付文書参照。＜30：禁忌'},
+    {name:'セレコキシブ（セレコックス）', threshold:'eGFR≥30', ok:v=>v>=30, caution:null, note:'eGFR＜30：禁忌。腎機能低下例全般で慎重投与'},
+    {name:'ロキソプロフェン（ロキソニン）', threshold:'eGFR≥30', ok:v=>v>=30, caution:null, note:'腎機能低下例は原則禁忌。利尿薬との併用で急性腎障害リスク'},
+    {name:'ジクロフェナク（ボルタレン）', threshold:'eGFR≥30', ok:v=>v>=30, caution:null, note:'eGFR＜30は禁忌'},
+    {name:'デュロキセチン（サインバルタ）', threshold:'eGFR≥30', ok:v=>v>=30, caution:null, note:'eGFR＜30は投与禁忌。透析患者も禁忌'},
+    {name:'トラマドール（ツートラム）', threshold:'制限なし', ok:v=>true, caution:null, note:'腎機能低下例は蓄積に注意。投与間隔延長を検討'},
+  ]
+};
+
+function updateRenalTable() {
+  const val = parseFloat(document.getElementById('renal-egfr').value);
+  const label = document.getElementById('renal-zone-label');
+  // ゾーン表示
+  if(isNaN(val)){
+    label.textContent = '';
+  } else if(val>=60){
+    label.innerHTML = '<span style="color:#3DDC84;font-weight:600">G1–G2（正常〜軽度低下）</span>';
+  } else if(val>=45){
+    label.innerHTML = '<span style="color:#3DDC84;font-weight:600">G3a（軽〜中等度低下）</span>';
+  } else if(val>=30){
+    label.innerHTML = '<span style="color:#FFB347;font-weight:600">G3b（中〜高度低下） ← 多くのBP禁忌境界</span>';
+  } else if(val>=15){
+    label.innerHTML = '<span style="color:#FF6B6B;font-weight:600">G4（高度低下） ← ほぼ全BP禁忌</span>';
+  } else {
+    label.innerHTML = '<span style="color:#FF6B6B;font-weight:600">G5（腎不全・透析前後） ← 強い制限あり</span>';
+  }
+  // テーブル描画
+  ['osteo','dvt','spine'].forEach(group=>{
+    const tbody = document.getElementById('renal-tbody-'+group);
+    if(!tbody) return;
+    tbody.innerHTML = RENAL_DRUGS[group].map(d=>{
+      let dot, status, bg;
+      if(isNaN(val)){
+        dot='<span style="color:var(--text3);font-size:18px;line-height:1">–</span>';
+        status=''; bg='';
+      } else if(d.ok(val)){
+        dot='<span style="color:#3DDC84;font-size:18px;line-height:1">●</span>';
+        status='<span style="color:#3DDC84;font-size:12px;font-weight:700">使用可</span>';
+        bg='';
+      } else if(d.caution && d.caution(val)){
+        dot='<span style="color:#FFB347;font-size:18px;line-height:1">●</span>';
+        status='<span style="color:#FFB347;font-size:12px;font-weight:700">注意・減量</span>';
+        bg='background:rgba(255,179,71,0.06);';
+      } else {
+        dot='<span style="color:#FF6B6B;font-size:18px;line-height:1">●</span>';
+        status='<span style="color:#FF6B6B;font-size:12px;font-weight:700">禁忌</span>';
+        bg='background:rgba(255,107,107,0.06);';
+      }
+      const noteHtml = (!isNaN(val) && (!d.ok(val)||(d.caution&&d.caution(val))))
+        ? `<div style="font-size:11px;color:var(--text2);margin-top:2px">${d.note}</div>` : '';
+      return `<tr style="border-bottom:1px solid var(--bg2);${bg}">
+        <td style="padding:8px 4px;vertical-align:top">
+          <div style="font-size:13px;color:var(--text1);font-weight:500">${d.name}</div>
+          ${noteHtml}
+        </td>
+        <td style="padding:8px 4px;text-align:center;vertical-align:middle;color:var(--text2);font-size:11px">${d.threshold}</td>
+        <td style="padding:8px 4px;text-align:center;vertical-align:middle">${dot}<br>${status}</td>
+      </tr>`;
+    }).join('');
+  });
+}
 const CAT_BADGE = {bp:'bb',rankl:'bt',pth:'br',sost:'br',serm:'ba',other:'bg'};
 
 // ========= NAVIGATION =========
@@ -1156,6 +1323,10 @@ const SEARCH_INDEX = [
   {name:'GIOP ステロイド性骨粗鬆症',sub:'PSL 3mg・5mg・治療開始基準',action:()=>{goto('scr-diag')}},
   {name:'YAM値',sub:'診断基準・70%・80%・60%',action:()=>{goto('scr-diag')}},
   {name:'eGFR 腎機能',sub:'BP禁忌・35・30・デノスマブ',action:()=>{goto('scr-lab')}},
+  {name:'腎機能別 使用可否',sub:'eGFR入力で全薬剤を一覧判定・禁忌・減量',action:()=>{goto('scr-renal')}},
+  {name:'腎機能低下 骨粗鬆症',sub:'ゾレドロン酸35・BP30・デノスマブ制限なし',action:()=>{goto('scr-renal')}},
+  {name:'腎機能低下 DVT DOAC',sub:'エドキサバン・リバーロキサバン・eGFR減量',action:()=>{goto('scr-renal')}},
+  {name:'プレガバリン ミロガバリン 腎',sub:'eGFR60以上通常量・30以下禁忌',action:()=>{goto('scr-renal')}},
   {name:'二次性骨粗鬆症',sub:'鑑別・除外診断・採血結果の解釈フロー',action:()=>{goto('scr-2nd')}},
   {name:'副甲状腺機能亢進症',sub:'高Ca・PTH高値・原発性・続発性',action:()=>{goto('scr-2nd')}},
   {name:'クッシング症候群',sub:'コルチゾール・デキサメサゾン抑制試験',action:()=>{goto('scr-2nd')}},
