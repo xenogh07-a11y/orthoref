@@ -595,7 +595,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic UI'
       <div class="card-body">
         <div class="ir"><span class="il">術前後</span>継続を強く推奨。中止 → 多発椎体骨折リバウンドリスク</div>
         <div class="ir"><span class="il">時期調整</span>手術と投与時期が重なる場合は前後1〜2週の融通は可</div>
-        <div class="ir"><span class="il">中止時</span>最終投与から6〜9ヶ月以内にBP製剤へ必ず切り替え</div>
+        <div class="ir"><span class="il">中止時</span>他の骨吸収抑制薬へ切り替えが必要（GL2025）。BPへ切り替えても骨密度は低下しうるため、切り替え後もフォロー</div>
       </div>
     </div>
     <div class="card">
@@ -692,7 +692,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic UI'
       <div class="card-body" style="font-size:13px">
         <div class="ir"><span class="il">ロモソズマブ</span>12ヶ月 → 必ずBP or デノスマブへ</div>
         <div class="ir"><span class="il">テリパラチド</span>24ヶ月 → 必ずBP or デノスマブへ</div>
-        <div class="ir"><span class="il">デノスマブ中止</span>6〜9ヶ月以内にBP製剤へ（リバウンド防止）</div>
+        <div class="ir"><span class="il">デノスマブ中止</span>他の骨吸収抑制薬へ切り替え（GL2025）。BPへ切り替えても骨密度低下の報告あり</div>
       </div>
     </div>
   </div>
@@ -1006,19 +1006,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic UI'
 // ========= DRUG DATA =========
 const DRUGS = [
   // ── BP製剤 ──
-  {id:'zona',cat:'bp',name:'ゾレドロン酸（リクラスト）',brand:'年1回 点滴',dose:'5mg 年1回（点滴 30分以上）',note:'骨折後2週以内推奨（HORIZON試験）。eGFR≥35必須。低Ca補正後に施行。インフル様症状3日程度',rx:'ゾレドロン酸注 5mg/100mL\n1バッグ 点滴静注（30分以上かけて）\n年1回\n※施行前：Ca・eGFR確認必須'},
-  {id:'alen',cat:'bp',name:'アレンドロン酸（フォサマック）',brand:'週1回 内服',dose:'35mg 週1回（内服）',note:'食前30分・水200mL以上。服用後30分は横にならない。食道障害注意。eGFR＜35は禁忌',rx:'アレンドロン酸錠 35mg\n1錠 週1回 起床時（食前30分以上前）\n※服用後30分は横にならないよう指導'},
+  {id:'zona',cat:'bp',name:'ゾレドロン酸（リクラスト）',brand:'年1回 点滴',dose:'5mg 年1回（点滴 30分以上）',note:'骨折後2週以内推奨（HORIZON試験）。添付文書の禁忌はCrCl＜35 mL/min（Cockcroft-Gault等で確認）。低Ca補正後に施行。インフル様症状3日程度',rx:'ゾレドロン酸注 5mg/100mL\n1バッグ 点滴静注（30分以上かけて）\n年1回\n※施行前：Ca・eGFR確認必須'},
+  {id:'alen',cat:'bp',name:'アレンドロン酸（フォサマック）',brand:'週1回 内服',dose:'35mg 週1回（内服）',note:'食前30分・水200mL以上。服用後30分は横にならない。食道障害注意。腎機能：禁忌の数値基準なし。重篤な腎機能障害は臨床試験未実施で、eGFR＜30では低Ca血症リスク増加（慎重投与）',rx:'アレンドロン酸錠 35mg\n1錠 週1回 起床時（食前30分以上前）\n※服用後30分は横にならないよう指導'},
   {id:'alen5',cat:'bp',name:'アレンドロン酸（フォサマック錠5mg・ボナロン錠5mg）',brand:'1日1回 内服',dose:'5mg 1日1回 毎朝起床時（内服）',note:'毎日製剤。起床してすぐ水約180mLで服用し、服用後少なくとも30分は飲食・他剤を避け、食事が終わるまで横にならない。禁忌：食道狭窄・アカラシア、30分以上上体を起こせない患者、低Ca血症、BP過敏症の既往。重篤な腎機能障害は慎重投与。週1回35mg製剤と重複処方しない。同系統に35mg経口ゼリー（週1回）、900μg点滴静注（4週に1回）もある（GL2025）',rx:'アレンドロン酸錠 5mg\n1錠 1日1回 毎朝起床時（水約180mLで服用）\n※服用後30分は飲食・他剤を避け、横にならないよう指導'},
-  {id:'rise',cat:'bp',name:'リセドロン酸（アクトネル）',brand:'週1回 or 月1回 内服',dose:'17.5mg 週1回 or 75mg 月1回（内服）',note:'食前30分。胃部症状比較的少ない。eGFR＜30は禁忌',rx:'リセドロン酸錠 17.5mg\n1錠 週1回 起床時（食前30分以上前）'},
-  {id:'mino',cat:'bp',name:'ミノドロン酸（ボノテオ）',brand:'月1回 内服',dose:'50mg 月1回（内服）',note:'食後2時間以上。eGFR＜30は禁忌',rx:'ミノドロン酸錠 50mg\n1錠 月1回 食後2時間以上経過後'},
-  {id:'iban',cat:'bp',name:'イバンドロン酸（ボンビバ）',brand:'月1回 内服 or 注射',dose:'100mg 月1回（内服）or 1mg/月（注射）',note:'内服は食前1時間。注射製剤でアドヒアランス向上',rx:'イバンドロン酸錠 100mg\n1錠 月1回 食前1時間\n※注射製剤：1mg/月 皮下または静脈内注射'},
+  {id:'rise',cat:'bp',name:'リセドロン酸（アクトネル）',brand:'週1回 or 月1回 内服',dose:'17.5mg 週1回 or 75mg 月1回（内服）',note:'食前30分。胃部症状比較的少ない。CrCl約30 mL/分未満は禁忌',rx:'リセドロン酸錠 17.5mg\n1錠 週1回 起床時（食前30分以上前）'},
+  {id:'mino',cat:'bp',name:'ミノドロン酸（ボノテオ）',brand:'月1回 内服',dose:'50mg 月1回（内服）',note:'食後2時間以上。重篤な腎障害は慎重投与（禁忌の数値基準なし。eGFR＜30で低Ca血症リスク増加）',rx:'ミノドロン酸錠 50mg\n1錠 月1回 食後2時間以上経過後'},
+  {id:'iban',cat:'bp',name:'イバンドロン酸（ボンビバ）',brand:'月1回 内服 or 注射',dose:'100mg 月1回（内服）or 1mg/月（注射）',note:'内服は食前1時間。注射製剤でアドヒアランス向上。重篤な腎障害は慎重投与（禁忌の数値基準なし。eGFR＜30で低Ca血症リスク増加）',rx:'イバンドロン酸錠 100mg\n1錠 月1回 食前1時間\n※注射製剤：1mg/月 皮下または静脈内注射'},
   // ── RANKL阻害薬 ──
-  {id:'deno',cat:'rankl',name:'デノスマブ（プラリア）',brand:'6ヶ月毎 皮下注',dose:'60mg 6ヶ月毎（皮下注）',note:'中止後リバウンドに注意→必ずBPへ移行。低Ca補正してから施行。ONJリスク。腎機能低下でも使用可',rx:'プラリア皮下注 60mgシリンジ\n60mg 皮下注射\n6ヶ月毎\n※施行前：Ca・25-OHD確認'},
+  {id:'deno',cat:'rankl',name:'デノスマブ（プラリア）',brand:'6ヶ月毎 皮下注',dose:'60mg 6ヶ月毎（皮下注）',note:'中止後は骨密度低下・骨折リスク上昇に注意→他の骨吸収抑制薬へ移行。低Ca補正してから施行。ONJリスク。腎機能低下でも使用可',rx:'プラリア皮下注 60mgシリンジ\n60mg 皮下注射\n6ヶ月毎\n※施行前：Ca・25-OHD確認'},
   // ── PTH系（骨形成促進） ──
-  {id:'fort',cat:'pth',name:'テリパラチド毎日製剤（フォルテオ）',brand:'1日1回 皮下注',dose:'20μg/日 皮下注 最長24ヶ月',note:'高骨折リスクに優先。骨形成促進。生涯2年上限（アバロパラチドと合算）。終了後逐次療法必須。起立性低血圧注意（初回投与後）',rx:'フォルテオ皮下注キット 28日分\n20μg 1日1回 皮下注射（自己注射）\n※残期間確認：生涯24ヶ月上限'},
-  {id:'terb',cat:'pth',name:'テリパラチド週1回製剤（テリボン皮下注用56.5μg）',brand:'週1回 皮下注（バイアル・通院）',dose:'56.5μg 週1回 皮下注 最長24ヶ月',note:'用時溶解バイアル製剤。在宅自己注射は不可で、週1回の通院投与が必要。上限はフォルテオと同様（アバロパラチドと合算）。自己注射が望ましい場合は下記の28.2μgオートインジェクター（週2回）を検討。GL2025：週1回投与は椎体骨折抑制のエビデンスが一貫（プラセボ・アレンドロネート対照）。非椎体骨折・大腿骨近位部骨折の抑制は未実証',rx:'テリボン皮下注用56.5μg\n1瓶 週1回 皮下注射（外来で医療従事者が投与）\n※残期間確認：生涯24ヶ月上限'},
+  {id:'fort',cat:'pth',name:'テリパラチド毎日製剤（フォルテオ）',brand:'1日1回 皮下注',dose:'20μg/日 皮下注 最長24ヶ月',note:'高骨折リスクに優先。骨形成促進。投与は24ヶ月まで（中断しても合計24ヶ月、再度の24ヶ月投与は不可）。終了後逐次療法必須。起立性低血圧注意（初回投与後）',rx:'フォルテオ皮下注キット 28日分\n20μg 1日1回 皮下注射（自己注射）\n※残期間確認：生涯24ヶ月上限'},
+  {id:'terb',cat:'pth',name:'テリパラチド週1回製剤（テリボン皮下注用56.5μg）',brand:'週1回 皮下注（バイアル・通院）',dose:'56.5μg 週1回 皮下注 最長24ヶ月',note:'用時溶解バイアル製剤。在宅自己注射は不可で、週1回の通院投与が必要。投与期間は24ヶ月まで。自己注射が望ましい場合は下記の28.2μgオートインジェクター（週2回）を検討。GL2025：週1回投与は椎体骨折抑制のエビデンスが一貫（プラセボ・アレンドロネート対照）。非椎体骨折・大腿骨近位部骨折の抑制は未実証',rx:'テリボン皮下注用56.5μg\n1瓶 週1回 皮下注射（外来で医療従事者が投与）\n※残期間確認：生涯24ヶ月上限'},
   {id:'terb2',cat:'pth',name:'テリパラチド週2回製剤（テリボン皮下注28.2μgオートインジェクター）',brand:'週2回 皮下注（自己注射可）',dose:'28.2μg 1日1回・週2回 皮下注 最長24ヶ月（合計208回まで）',note:'半量を週2回にすることで悪心・嘔吐などの副作用が少なくなることを狙った製剤（週1回56.5μg製剤に対する非劣性を第3相で確認）。在宅自己注射可。投与間隔は原則3〜4日（例：月・木）。中断後の再開でも合計24ヶ月（208回）を超えない。2026年5月に24ヶ月超の長期投与を検証する国内P3が開始（現行の上限は24ヶ月のまま）',rx:'テリボン皮下注28.2μgオートインジェクター\n1キット 1日1回 週2回 皮下注射（自己注射・原則3〜4日間隔）\n※残期間確認：生涯24ヶ月（208回）上限'},
-  {id:'abalo',cat:'pth',name:'アバロパラチド（オスタバロ）',brand:'1日1回 皮下注',dose:'80μg/日 皮下注 最長18ヶ月',note:'PTHrP類似体。骨形成促進。生涯上限18ヶ月（テリパラチドとの合算）。終了後逐次療法必須。起立性低血圧注意（初回投与後）。高Ca尿症モニタリング',rx:'オスタバロ皮下注キット 80μg\n80μg 1日1回 皮下注射（自己注射）\n※残期間確認：テリパラチドとの合算で生涯18ヶ月上限\n※初回投与後30分は安静（起立性低血圧）'},
+  {id:'abalo',cat:'pth',name:'アバロパラチド（オスタバロ）',brand:'1日1回 皮下注',dose:'80μg/日 皮下注 最長18ヶ月',note:'PTHrP類似体。骨形成促進。投与は18ヶ月まで（中断しても合計18ヶ月、再度の18ヶ月投与は不可）。テリパラチド投与歴のある患者での臨床試験は未実施で安全性未確立。終了後逐次療法必須。起立性低血圧注意（初回投与後）。高Ca尿症モニタリング',rx:'オスタバロ皮下注キット 80μg\n80μg 1日1回 皮下注射（自己注射）\n※残期間確認：合計18ヶ月上限（テリパラチド投与歴がある場合は安全性未確立）\n※初回投与後30分は安静（起立性低血圧）'},
   // ── 抗スクレロスチン抗体 ──
   {id:'romo',cat:'sost',name:'ロモソズマブ（イベニティ）',brand:'月1回×12ヶ月 皮下注',dose:'210mg 月1回（皮下注）× 12ヶ月',note:'骨形成促進＋骨吸収抑制の二重効果。心血管イベント既往は禁忌。12ヶ月後はBP or デノスマブへ必ず移行',rx:'イベニティ皮下注 105mgシリンジ\n2本（210mg）月1回 皮下注射\n計12ヶ月\n※施行前：Ca・心血管既往確認'},
   // ── SERM ──
@@ -1035,11 +1035,11 @@ const CAT_LABELS = {bp:'BP製剤',rankl:'RANKL阻害薬',pth:'PTH系',sost:'抗�
 // ── 腎機能別使用可否データ ──
 const RENAL_DRUGS = {
   osteo: [
-    {name:'ゾレドロン酸（リクラスト）', threshold:'eGFR≥35', ok:v=>v>=35, caution:null, note:'eGFR＜35は禁忌'},
-    {name:'アレンドロン酸（フォサマック）', threshold:'eGFR≥35', ok:v=>v>=35, caution:null, note:'eGFR＜35は禁忌'},
-    {name:'リセドロン酸（アクトネル）', threshold:'eGFR≥30', ok:v=>v>=30, caution:null, note:'eGFR＜30は禁忌'},
-    {name:'ミノドロン酸（ボノテオ）', threshold:'eGFR≥30', ok:v=>v>=30, caution:null, note:'eGFR＜30は禁忌'},
-    {name:'イバンドロン酸（ボンビバ）', threshold:'eGFR≥30', ok:v=>v>=30, caution:null, note:'eGFR＜30は禁忌'},
+    {name:'ゾレドロン酸（リクラスト）', threshold:'CrCl≥35', ok:v=>v>=35, caution:null, note:'添付文書の禁忌はCrCl＜35 mL/min（ここではeGFRで代用した目安）'},
+    {name:'アレンドロン酸（フォサマック）', threshold:'eGFR≥30', ok:v=>v>=30, caution:v=>v<30, note:'禁忌の数値基準なし。重篤な腎機能障害は臨床試験未実施、eGFR＜30で低Ca血症リスク増加→慎重投与（デノスマブも検討）'},
+    {name:'リセドロン酸（アクトネル）', threshold:'CrCl≥30', ok:v=>v>=30, caution:null, note:'CrCl約30 mL/分未満は禁忌（ここではeGFRで代用した目安）'},
+    {name:'ミノドロン酸（ボノテオ）', threshold:'eGFR≥30', ok:v=>v>=30, caution:v=>v<30, note:'禁忌の数値基準なし。重篤な腎障害は慎重投与、eGFR＜30で低Ca血症リスク増加（デノスマブも検討）'},
+    {name:'イバンドロン酸（ボンビバ）', threshold:'eGFR≥30', ok:v=>v>=30, caution:v=>v<30, note:'禁忌の数値基準なし。重篤な腎障害は慎重投与、eGFR＜30で低Ca血症リスク増加（デノスマブも検討）'},
     {name:'デノスマブ（プラリア）', threshold:'制限なし', ok:v=>true, caution:null, note:'腎機能問わず使用可。低Ca・デノタス必須'},
     {name:'テリパラチド（フォルテオ/テリボン）', threshold:'制限なし', ok:v=>true, caution:null, note:'腎機能による禁忌なし'},
     {name:'アバロパラチド（オスタバロ）', threshold:'制限なし', ok:v=>true, caution:null, note:'腎機能による禁忌なし'},
@@ -1078,7 +1078,7 @@ function updateRenalTable() {
   } else if(val>=30){
     label.innerHTML = '<span style="color:#FFB347;font-weight:600">G3b（中〜高度低下） ← 多くのBP禁忌境界</span>';
   } else if(val>=15){
-    label.innerHTML = '<span style="color:#FF6B6B;font-weight:600">G4（高度低下） ← ほぼ全BP禁忌</span>';
+    label.innerHTML = '<span style="color:#FF6B6B;font-weight:600">G4（高度低下） ← BPは禁忌または慎重投与</span>';
   } else {
     label.innerHTML = '<span style="color:#FF6B6B;font-weight:600">G5（腎不全・透析前後） ← 強い制限あり</span>';
   }
@@ -1261,7 +1261,7 @@ function calcRec() {
   if(giop==='low' && yam && yam < 80) indicated = true;
 
   if(prev==='deno') {
-    document.getElementById('eval-output').innerHTML = `<div class="rec-card danger"><div class="rec-title" style="color:var(--red)">⚠️ デノスマブ中止後：リバウンド対策</div><div class="rec-item"><span class="rec-rank" style="background:rgba(30,95,165,0.9);color:#FFFFFF">必須</span><div><div class="rec-name">ビスホスホネート製剤</div><div class="rec-note">最終投与から6〜9ヶ月以内に開始。遅延は多発椎体骨折リスク</div></div></div></div>`;
+    document.getElementById('eval-output').innerHTML = `<div class="rec-card danger"><div class="rec-title" style="color:var(--red)">⚠️ デノスマブ中止後：リバウンド対策</div><div class="rec-item"><span class="rec-rank" style="background:rgba(30,95,165,0.9);color:#FFFFFF">必須</span><div><div class="rec-name">ビスホスホネート製剤などの骨吸収抑制薬</div><div class="rec-note">中止後は骨密度低下・骨折リスク上昇の報告あり（GL2025）。BPへ切り替えても骨密度は低下しうるため、切り替え後も骨密度・骨代謝マーカーでフォロー</div></div></div></div>`;
     return;
   }
   if(prev==='anab') {
@@ -1274,7 +1274,7 @@ function calcRec() {
   }
 
   const warns = [];
-  if(egfr < 30) warns.push('eGFR＜30：ほとんどのBP製剤は禁忌。デノスマブを優先');
+  if(egfr < 30) warns.push('eGFR＜30：リセドロン酸・ゾレドロン酸は禁忌（CrCl基準）。その他のBPも慎重投与（低Ca血症リスク）。デノスマブを優先');
   if(cv==='yes') warns.push('ロモソズマブは心血管イベント既往により禁忌');
   html += warns.map(w => `<div class="warn-msg">⚠️ ${w}</div>`).join('');
 
@@ -1321,7 +1321,7 @@ const SEARCH_INDEX = [
   {name:'HIT ヘパリン起因性血小板減少症',sub:'5〜14日後・50%以上低下・アルガトロバンへ',action:()=>{goto('scr-dvt')}},
   {name:'術前休薬 DOAC ワルファリン',sub:'24〜48時間・5日前・INR確認',action:()=>{goto('scr-dvt')}},
   {name:'ドラッグホリデー',sub:'BP 5年以上・休薬判断・再開基準',action:()=>{goto('scr-peri')}},
-  {name:'デノスマブ中止 リバウンド',sub:'BP切り替え・6〜9ヶ月以内・多発椎体骨折',action:()=>{goto('scr-peri')}},
+  {name:'デノスマブ中止 リバウンド',sub:'骨吸収抑制薬へ切り替え・BP・骨密度低下・多発椎体骨折',action:()=>{goto('scr-peri')}},
   {name:'逐次療法 シーケンシャル',sub:'テリパラチド終了後・ロモソズマブ終了後・BP移行',action:()=>{goto('scr-diag')}},
   {name:'診断基準',sub:'YAM 70%・80%・脆弱性骨折',action:()=>{goto('scr-diag')}},
   {name:'GIOP ステロイド性骨粗鬆症',sub:'PSL 3mg・5mg・治療開始基準',action:()=>{goto('scr-diag')}},
@@ -1372,12 +1372,12 @@ function execSearch(i) {
 // ========= TIPS =========
 const TIPS = [
   {title:'ゾレドロン酸は骨折後2週以内に', text:'HORIZON試験で骨折後早期の点滴が死亡率も低下させることが示された。入院中に実施できる環境であれば積極的に。'},
-  {title:'デノスマブ中止は慎重に', text:'中止後6〜9ヶ月以内にBP製剤へ移行しないと多発椎体骨折のリバウンドが起こりうる。誰もフォローしない状況を作らない。'},
+  {title:'デノスマブ中止は慎重に', text:'中止後は骨密度低下・骨折リスク上昇が報告されており、他の骨吸収抑制薬への切り替えが必要。BPへ切り替えても骨密度は低下しうる。誰もフォローしない状況を作らない。'},
   {title:'25-OHDを確認したか？', text:'日本人では25-OHD欠乏（＜20 ng/mL）が多い。VitD不足の状態で骨粗鬆症薬を開始しても効果減弱。先に確認・補充を。'},
   {title:'サイレント椎体骨折を見落とさない', text:'大腿骨近位部骨折入院患者の脊椎X線を必ず撮影。既存椎体骨折の有無で高骨折リスク判定が変わる。'},
   {title:'AFFの前駆痛を見逃すな', text:'BP長期使用患者の大腿部・鼠径部痛は非定型大腿骨骨折の前駆症状の可能性。必ず両側X線を撮影。'},
   {title:'ロモソズマブと心血管リスク', text:'心筋梗塞・脳卒中の既往がある患者にロモソズマブは禁忌。術後患者では既往を必ず確認してから処方を。'},
-  {title:'テリパラチドの生涯2年上限', text:'フォルテオもテリボンも合算して生涯24ヶ月が上限。残期間を必ず確認。終了後は必ず逐次療法へ。'},
+  {title:'テリパラチドの生涯2年上限', text:'テリパラチドは各製剤とも投与は24ヶ月まで（中断しても合計24ヶ月、再度の24ヶ月投与は不可）。残期間を必ず確認。終了後は必ず逐次療法へ。'},
 ];
 
 function setGreeting() {
