@@ -84,6 +84,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic UI'
 .tip-dot{width:6px;height:6px;border-radius:50%;background:var(--acc);flex-shrink:0;margin-top:6px}
 .tip-text{font-size:12px;color:var(--text2);line-height:1.6}
 .tip-title{font-size:12px;font-weight:500;color:var(--acc2);margin-bottom:3px}
+.tip-label{font-size:10px;font-weight:600;color:var(--text3);letter-spacing:0.5px;margin-bottom:5px}
+.tip-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:8px}
+.tip-src{font-size:10px;color:var(--text3)}
+.tip-next{background:none;border:0.5px solid var(--bg3);border-radius:20px;color:var(--acc2);font-size:12px;padding:11px 14px;cursor:pointer;-webkit-user-select:none}
+.tip-next:active{background:var(--bg2)}
 
 /* ======= CARDS ======= */
 .card{background:var(--bg1);border:0.5px solid var(--border);border-radius:var(--r);margin-bottom:9px;overflow:hidden}
@@ -283,7 +288,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic UI'
     </div>
     <div class="tip-card" id="tip-card">
       <div class="tip-dot"></div>
-      <div><div class="tip-title" id="tip-title"></div><div class="tip-text" id="tip-text"></div></div>
+      <div style="flex:1;min-width:0">
+        <div class="tip-label" id="tip-label"></div>
+        <div class="tip-title" id="tip-title"></div>
+        <div class="tip-text" id="tip-text"></div>
+        <div class="tip-foot"><span class="tip-src" id="tip-src"></span><button class="tip-next" onclick="showTip()">次の豆知識 ›</button></div>
+      </div>
     </div>
   </div>
 </div>
@@ -1025,7 +1035,8 @@ const DRUGS = [
   {id:'ralo',cat:'serm',name:'ラロキシフェン（エビスタ）',brand:'1日1回 内服',dose:'60mg/日（内服）',note:'閉経後女性のみ。深部静脈血栓リスク注意。椎体骨折予防に有効',rx:'ラロキシフェン塩酸塩錠 60mg\n1錠 1日1回（食事に関係なく可）'},
   {id:'baze',cat:'serm',name:'バゼドキシフェン（ビビアント）',brand:'1日1回 内服',dose:'20mg/日（内服）',note:'閉経後女性のみ。ラロキシフェンより血栓リスクやや低。椎体骨折予防',rx:'バゼドキシフェン酢酸塩錠 20mg\n1錠 1日1回'},
   // ── 補助薬 ──
-  {id:'alph',cat:'other',name:'アルファカルシドール（アルファロール）',brand:'1日1回 内服',dose:'0.5〜1μg/日（内服）',note:'活性型VitD3。高Ca血症モニタリング必要。転倒予防効果の報告あり',rx:'アルファカルシドールカプセル 0.5μg\n1〜2カプセル 1日1回'},
+  {id:'alph',cat:'other',name:'アルファカルシドール（アルファロール）',brand:'1日1回 内服',dose:'0.5〜1μg/日（内服）',note:'活性型VitD3。高Ca血症モニタリング必要。転倒予防効果の報告あり。エディロールなど他の活性型VitD3製剤との重複に注意',rx:'アルファカルシドールカプセル 0.5μg\n1〜2カプセル 1日1回'},
+  {id:'edil',cat:'other',name:'エルデカルシトール（エディロール）',brand:'1日1回 内服',dose:'0.75μg/日（内服）。症状により0.5μgに減量',note:'活性型VitD3誘導体。血清Caを3〜6ヶ月に1回程度測定（腎機能障害・悪性腫瘍・原発性副甲状腺機能亢進症では投与初期に頻回に）。高Ca血症を起こしたら直ちに休薬し、正常域に戻ってから0.5μgで再開。0.5μgでは骨折予防効果が確立していないため漫然と継続せず、0.75μgへの増量か他剤への変更を検討。禁忌：妊婦・妊娠の可能性のある女性・授乳婦。Ca製剤・活性型VitD3製剤（アルファカルシドール等）との併用は高Ca血症のおそれ（併用注意）。尿路結石の既往がある場合は尿中Caも測定',rx:'エディロール錠 0.75μg\n1錠 1日1回\n※血清Ca：3〜6ヶ月に1回程度測定\n※Ca製剤・活性型VitD3製剤との併用は高Ca血症に注意\n※剤形（錠/カプセル）は採用品に合わせる'},
   {id:'mena',cat:'other',name:'メナテトレノン（グラケー）',brand:'食後 1日3回 内服',dose:'45mg/日 食後（内服）',note:'VitK2製剤。ワルファリン内服中は禁忌。椎体骨折予防の補助',rx:'メナテトレノンカプセル 15mg\n3カプセル 1日3回 食後'},
   {id:'denota',cat:'other',name:'デノタスチュアブル配合錠（炭酸Ca＋VitD3）',brand:'1日1回 食後 内服',dose:'2錠/日（炭酸Ca 500mg×2＋コレカルシフェロール 400IU×2）',note:'デノスマブ（プラリア）使用時の低Ca血症・低VitD予防として原則併用。他のCa製剤・VitD製剤との重複投与に注意。噛み砕いて服用可（チュアブル）。便秘・胃部不快感に注意',rx:'デノタスチュアブル配合錠\n2錠 1日1回 食後（噛み砕いて服用）\n※プラリア投与時の低Ca予防として併用'},
 ];
@@ -1046,6 +1057,7 @@ const RENAL_DRUGS = {
     {name:'ロモソズマブ（イベニティ）', threshold:'制限なし', ok:v=>true, caution:null, note:'腎機能による禁忌なし。心血管既往に注意'},
     {name:'ラロキシフェン（エビスタ）', threshold:'制限なし', ok:v=>true, caution:null, note:'重度腎障害は慎重投与'},
     {name:'アルファカルシドール（アルファロール）', threshold:'制限なし', ok:v=>true, caution:null, note:'高Ca血症モニタリング。腎機能低下例ほど注意'},
+    {name:'エルデカルシトール（エディロール）', threshold:'禁忌なし・Ca要監視', ok:v=>true, caution:null, note:'腎機能障害では血清Caが上がり高Ca血症となるおそれ。投与初期は血清Caを頻回に測定'},
   ],
   dvt: [
     {name:'エドキサバン（リクシアナ）', threshold:'eGFR 15〜50で減量', ok:v=>v>=50, caution:v=>v>=15&&v<50, note:'15〜50：30mg/日に減量。＜15：禁忌'},
@@ -1303,6 +1315,7 @@ const SEARCH_INDEX = [
   {name:'テリパラチド',sub:'フォルテオ・テリボン・PTH系・高骨折リスク・24ヶ月',action:()=>{goto('scr-drugs')}},
   {name:'テリボン 週1回 週2回',sub:'56.5μgバイアル週1回（通院）・28.2μgオートインジェクター週2回（自己注射可）・3〜4日間隔・208回',action:()=>{goto('scr-drugs')}},
   {name:'ロモソズマブ',sub:'イベニティ・12ヶ月・心血管禁忌・抗スクレロスチン',action:()=>{goto('scr-drugs')}},
+  {name:'エルデカルシトール エディロール',sub:'活性型VitD3・0.75μg・高Ca血症・血清Ca定期測定・Ca製剤併用注意',action:()=>{goto('scr-drugs')}},
   {name:'アレンドロン酸（アレンドロネート）',sub:'フォサマック・ボナロン・1日1回5mg・週1回35mg・BP製剤・起床時',action:()=>{goto('scr-drugs')}},
   {name:'大腿骨近位部骨折',sub:'FLSチェックリスト・治療開始タイムライン',action:()=>{goto('scr-hip')}},
   {name:'椎体骨折',sub:'Genant分類・BKP/PKP適応・新鮮/陳旧',action:()=>{goto('scr-vert')}},
@@ -1370,26 +1383,73 @@ function execSearch(i) {
 }
 
 // ========= TIPS =========
+// kind: 'column'＝疫学・エビデンスの豆知識（出典：骨粗鬆症の予防と治療ガイドライン2025）／'tip'＝臨床ヒント
 const TIPS = [
-  {title:'ゾレドロン酸は骨折後2週以内に', text:'HORIZON試験で骨折後早期の点滴が死亡率も低下させることが示された。入院中に実施できる環境であれば積極的に。'},
-  {title:'デノスマブ中止は慎重に', text:'中止後は骨密度低下・骨折リスク上昇が報告されており、他の骨吸収抑制薬への切り替えが必要。BPへ切り替えても骨密度は低下しうる。誰もフォローしない状況を作らない。'},
-  {title:'25-OHDを確認したか？', text:'日本人では25-OHD欠乏（＜20 ng/mL）が多い。VitD不足の状態で骨粗鬆症薬を開始しても効果減弱。先に確認・補充を。'},
-  {title:'サイレント椎体骨折を見落とさない', text:'大腿骨近位部骨折入院患者の脊椎X線を必ず撮影。既存椎体骨折の有無で高骨折リスク判定が変わる。'},
-  {title:'AFFの前駆痛を見逃すな', text:'BP長期使用患者の大腿部・鼠径部痛は非定型大腿骨骨折の前駆症状の可能性。必ず両側X線を撮影。'},
-  {title:'ロモソズマブと心血管リスク', text:'心筋梗塞・脳卒中の既往がある患者にロモソズマブは禁忌。術後患者では既往を必ず確認してから処方を。'},
-  {title:'テリパラチドの生涯2年上限', text:'テリパラチドは各製剤とも投与は24ヶ月まで（中断しても合計24ヶ月、再度の24ヶ月投与は不可）。残期間を必ず確認。終了後は必ず逐次療法へ。'},
+  {kind:'tip', title:'ゾレドロン酸は骨折後2週以内に', text:'HORIZON試験で骨折後早期の点滴が死亡率も低下させることが示された。入院中に実施できる環境であれば積極的に。'},
+  {kind:'tip', title:'デノスマブ中止は慎重に', text:'中止後は骨密度低下・骨折リスク上昇が報告されており、他の骨吸収抑制薬への切り替えが必要。BPへ切り替えても骨密度は低下しうる。誰もフォローしない状況を作らない。'},
+  {kind:'tip', title:'25-OHDを確認したか？', text:'日本人では25-OHD欠乏（＜20 ng/mL）が多い。VitD不足の状態で骨粗鬆症薬を開始しても効果減弱。先に確認・補充を。'},
+  {kind:'tip', title:'サイレント椎体骨折を見落とさない', text:'大腿骨近位部骨折入院患者の脊椎X線を必ず撮影。既存椎体骨折の有無で高骨折リスク判定が変わる。'},
+  {kind:'tip', title:'AFFの前駆痛を見逃すな', text:'BP長期使用患者の大腿部・鼠径部痛は非定型大腿骨骨折の前駆症状の可能性。必ず両側X線を撮影。'},
+  {kind:'tip', title:'ロモソズマブと心血管リスク', text:'心筋梗塞・脳卒中の既往がある患者にロモソズマブは禁忌。術後患者では既往を必ず確認してから処方を。'},
+  {kind:'tip', title:'テリパラチドの生涯2年上限', text:'テリパラチドは各製剤とも投与は24ヶ月まで（中断しても合計24ヶ月、再度の24ヶ月投与は不可）。残期間を必ず確認。終了後は必ず逐次療法へ。'},
+  {kind:'tip', title:'エディロール＋Ca製剤・活性型VitDは高Ca血症に注意', text:'エルデカルシトールは血清Caを3〜6ヶ月に1回程度測定。Ca製剤や活性型VitD3製剤との併用で高Ca血症のおそれがあるため、重複処方を確認。'},
+  {kind:'column', title:'骨粗鬆症は何人いる？', text:'わが国の骨粗鬆症患者（40歳以上）は2015年の推計で約1,590万人（女性1,180万人・男性410万人）。有病者数はまだ増加している。', src:'GL2025'},
+  {kind:'column', title:'有病率は腰椎より大腿骨頚部のほうが高い', text:'2015〜2016年の有病率（40歳以上）は、腰椎で男性1.4％・女性13.9％、大腿骨頚部で男性4.1％・女性18.3％。', src:'GL2025'},
+  {kind:'column', title:'骨折しない限り痛くない', text:'骨粗鬆症は骨折を起こさない限り痛みを生じない。椎体骨折では腰背部痛などの明らかな症状がない骨折が約3分の2を占める。', src:'GL2025'},
+  {kind:'column', title:'大腿骨近位部骨折後の生存率', text:'わが国の生存率は1年で81％、2年で67％、5年で49％、10年で26％。椎体骨折後の10年生存率は69％で、椎体骨折の数が多いほど低い。', src:'GL2025'},
+  {kind:'column', title:'骨折の「差し迫った」リスク', text:'骨折後2年以内の再骨折リスクはimminent fracture（差し迫った骨折）と呼ばれ、骨折後1年以内に約7.6％、2年以内に約11.6％が再骨折する。', src:'GL2025 第2章'},
+  {kind:'column', title:'骨密度より既存骨折', text:'32ヵ国64コホートのメタ解析で、低骨密度が説明できるのは骨粗鬆症性骨折リスクの17％・大腿骨近位部骨折リスクの33％。既存骨折は低骨密度より骨折リスクへの寄与が大きかった。', src:'GL2025 第2章'},
+  {kind:'column', title:'既存骨折のリスクは約1.8倍', text:'既存骨折があると骨折リスクは約1.8倍。X線で診断される形態骨折（新規）では約3倍。既存骨折の数が多いほどリスクは高まる。', src:'GL2025 第2章'},
+  {kind:'column', title:'骨密度1SD低下で骨折リスク1.5〜2倍', text:'骨密度が1SD低いと男女とも骨折リスクは1.5〜2倍。年齢は骨密度とは独立した危険因子で、同じ骨密度でも高齢ほど骨折リスクは高い。', src:'GL2025 第2章'},
+  {kind:'column', title:'やせ・肥満と骨折部位', text:'やせは大腿骨近位部骨折の危険因子だが、下腿骨折では予防因子。肥満は上腕骨折の危険因子になる。', src:'GL2025 第2章'},
+  {kind:'column', title:'生活習慣と骨折リスク', text:'喫煙は骨折リスクを1.3倍、1日3単位（エタノール8〜10g/単位）以上の飲酒は大腿骨近位部骨折リスクを1.7倍に高める。', src:'GL2025 第2章'},
+  {kind:'column', title:'併存疾患でも骨折リスクは上がる', text:'2型糖尿病・COPD・CKDでは骨折リスクが1.3〜1.7倍。グルココルチコイドは骨密度と独立して、用量依存性に骨折リスクを高める。', src:'GL2025 第2章'},
+  {kind:'column', title:'家族歴と転倒歴', text:'親の大腿骨近位部骨折歴で骨折リスクは2.3倍。転倒歴があると骨折リスクは男性1.4倍・女性1.5倍になる。', src:'GL2025 第2章'},
+  {kind:'column', title:'椎体骨折が多発すると', text:'椎体骨折は脆弱性骨折で最も頻度が高い。治癒後も椎体変形が残り、多発すると脊柱後弯から腰背痛・胃食道逆流・呼吸機能障害をきたしADLが制限される。', src:'GL2025'},
+  {kind:'column', title:'日本のアレンドロネートは海外の半量', text:'わが国の投与量は、サロゲートマーカーに対する効果の同等性にもとづき海外の半量に設定されている。連日5mg錠・週1回35mg錠・4週に1回900μg点滴は、腰椎骨密度・尿中NTXで同等の変動を示した。', src:'GL2025 第5章'},
+  {kind:'column', title:'テリパラチドは橈骨遠位端には効きにくい', text:'テリパラチド（遺伝子組換え）は腰椎・大腿骨近位部の骨密度は上げるが、橈骨遠位端では骨密度上昇効果がみられず、RCTではプラセボ群と同様かそれ以上に低下した。', src:'GL2025 第5章'},
+  {kind:'column', title:'アバロパラチドは高Ca血症が少ない', text:'第III相試験（ACTIVE）で高Ca血症の全発生率はテリパラチド群6.4％に対しアバロパラチド群3.4％と有意に低かった。', src:'GL2025 第5章'},
+  {kind:'column', title:'カルシトニン薬の位置づけ', text:'GL2025は、骨密度上昇・骨折抑制のいずれについても、カルシトニン薬を投与しないことを提案している。', src:'GL2025 第5章 CQ28・29'},
+  {kind:'column', title:'Caサプリは1回500mgまで', text:'Caサプリメントは1回500mg以上の投与で心血管障害リスクが高まったとの報告があり、1回投与量は500mgを超えないように配慮する。', src:'GL2025 第4章'},
 ];
+
+// 直前までに見た豆知識は全部見終わるまで出さない（localStorageが使えない環境では単純なランダム）
+function pickTipIndex() {
+  let seen = [];
+  try {
+    seen = JSON.parse(localStorage.getItem('orthoref-tips-seen') || '[]');
+    if(!Array.isArray(seen)) seen = [];
+  } catch(e) { seen = []; }
+  let pool = TIPS.map((_, i) => i).filter(i => !seen.includes(i));
+  if(!pool.length) {
+    const last = seen[seen.length - 1];
+    seen = [];
+    pool = TIPS.map((_, i) => i).filter(i => i !== last);
+  }
+  const idx = pool[Math.floor(Math.random() * pool.length)];
+  seen.push(idx);
+  try { localStorage.setItem('orthoref-tips-seen', JSON.stringify(seen)); } catch(e) {}
+  return idx;
+}
+
+function showTip() {
+  const tip = TIPS[pickTipIndex()];
+  const lb = document.getElementById('tip-label');
+  const tt = document.getElementById('tip-title');
+  const tx = document.getElementById('tip-text');
+  const sr = document.getElementById('tip-src');
+  if(lb) lb.textContent = tip.kind === 'column' ? '📖 骨粗鬆症コラム' : '💡 臨床ヒント';
+  if(tt) tt.textContent = tip.title;
+  if(tx) tx.textContent = tip.text;
+  if(sr) sr.textContent = tip.src ? '出典：' + tip.src : '';
+}
 
 function setGreeting() {
   const h = new Date().getHours();
   const greet = h < 12 ? 'おはようございます' : h < 17 ? 'お疲れ様です' : '夜間もお疲れ様です';
   const el = document.getElementById('greeting');
   if(el) el.textContent = greet;
-  const tip = TIPS[Math.floor(Math.random() * TIPS.length)];
-  const tt = document.getElementById('tip-title');
-  const tx = document.getElementById('tip-text');
-  if(tt) tt.textContent = '💡 ' + tip.title;
-  if(tx) tx.textContent = tip.text;
+  showTip();
 }
 
 // ========= AO CLASSIFICATION DATA =========
