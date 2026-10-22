@@ -226,6 +226,30 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic UI'
 .gap-sm{gap:6px}
 .mt-sm{margin-top:8px}
 .mt-md{margin-top:12px}
+
+/* ======= CASE QUIZ ======= */
+.qz-tabs{display:flex;gap:8px;margin-bottom:12px}
+.qz-tab{flex:1;padding:10px 8px;border-radius:10px;border:0.5px solid var(--border);background:var(--bg1);color:var(--text2);font-size:13px;font-weight:500;cursor:pointer;min-height:44px;font-family:inherit}
+.qz-tab.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.qz-meta{display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:8px}
+.qz-pt{background:var(--bg1);border:0.5px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:12px}
+.qz-pt p{font-size:13px;line-height:1.6;margin:2px 0;color:var(--text1)}
+.qz-q{font-size:15px;font-weight:600;margin:0 0 8px}
+.qz-opt{display:block;width:100%;text-align:left;padding:12px;margin:0 0 8px;background:var(--bg1);border:1px solid var(--border);border-radius:10px;color:var(--text1);font-size:14px;line-height:1.5;min-height:44px;cursor:pointer;font-family:inherit}
+.qz-opt:active{background:var(--bg2)}
+.qz-opt.best{border-color:var(--green)}
+.qz-opt.ok{border-color:var(--amber)}
+.qz-opt.ng{border-color:var(--red)}
+.qz-opt.ans{border-width:2px}
+.qz-fb{padding:12px;border-radius:10px;font-size:13px;line-height:1.6;margin-top:4px}
+.qz-fb.best{background:rgba(61,220,132,0.12);color:var(--green)}
+.qz-fb.ok{background:rgba(255,179,71,0.12);color:var(--amber)}
+.qz-fb.ng{background:rgba(255,107,107,0.12);color:var(--red)}
+.qz-rec{font-size:13px;color:var(--text2);line-height:1.6;margin-top:8px}
+.qz-next{margin-top:12px;padding:12px 18px;background:var(--acc);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;min-height:44px;cursor:pointer;font-family:inherit}
+.qz-end{background:var(--bg1);border:0.5px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.qz-end-n{font-size:28px;font-weight:700;margin:4px 0 14px}
+.qz-note{font-size:11px;color:var(--text3);line-height:1.6;margin-top:16px}
 </style>
 </head>
 <body>
@@ -285,6 +309,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic UI'
     <div class="quick-row" style="margin-top:8px">
       <button class="qk" onclick="goto('scr-spine')" style="flex:none;width:calc(50% - 4px)"><span class="qk-ico">🧠</span><span class="qk-txt" style="font-size:11px">脊椎疾患<br>処方テンプレ</span></button>
       <button class="qk" onclick="goto('scr-renal')" style="flex:none;width:calc(50% - 4px)"><span class="qk-ico">🫘</span><span class="qk-txt" style="font-size:11px">腎機能別<br>使用可否</span></button>
+    </div>
+    <div class="quick-row" style="margin-top:8px">
+      <button class="qk" onclick="goto('scr-quiz')" style="flex-direction:row;justify-content:center;gap:10px"><span class="qk-ico">🎮</span><span class="qk-txt" style="font-size:12px;text-align:left">症例クイズ<br>治療開始・薬剤選択・逐次療法</span></button>
     </div>
     <div class="tip-card" id="tip-card">
       <div class="tip-dot"></div>
@@ -982,6 +1009,25 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic UI'
      BOTTOM NAV
 ============================= -->
 
+<!-- ============================
+     CASE QUIZ
+============================= -->
+<div class="screen" id="scr-quiz">
+  <div class="sub-hdr">
+    <button class="back-btn" onclick="goBack()">‹ ホーム</button>
+    <div class="sub-hdr-title">症例クイズ</div>
+    <div class="sub-hdr-sub">架空症例で治療開始・薬剤選択・逐次療法を確認</div>
+  </div>
+  <div class="scroll-body" id="qz-body">
+    <div class="qz-tabs">
+      <button class="qz-tab on" data-d="a">治療開始・薬剤選択</button>
+      <button class="qz-tab" data-d="b">逐次療法</button>
+    </div>
+    <div id="qz-main"></div>
+    <div class="qz-note">架空症例による学習用です。判断の根拠は日本骨粗鬆症学会「骨粗鬆症の予防と治療ガイドライン2025年版」と各薬剤の添付文書で確認してください。</div>
+  </div>
+</div>
+
 <!-- ADD TO HOME SCREEN BANNER -->
 <div id='add-banner' style='display:none;background:#2D7DD2;padding:10px 16px;flex-shrink:0;align-items:center;justify-content:space-between;flex-shrink:0'>
   <div style='font-size:12px;color:white;line-height:1.5'>📱 <b>ホーム画面に追加</b>すると<br>アプリとして快適に使えます</div>
@@ -1341,6 +1387,7 @@ const SEARCH_INDEX = [
   {name:'YAM値',sub:'診断基準・70%・80%・60%',action:()=>{goto('scr-diag')}},
   {name:'eGFR 腎機能',sub:'BP禁忌・35・30・デノスマブ',action:()=>{goto('scr-lab')}},
   {name:'腎機能別 使用可否',sub:'eGFR入力で全薬剤を一覧判定・禁忌・減量',action:()=>{goto('scr-renal')}},
+  {name:'症例クイズ 逐次療法 治療開始 薬剤選択',sub:'架空症例で練習・テリパラチド後・デノスマブ中止後・ロモソズマブ後',action:()=>{goto('scr-quiz')}},
   {name:'腎機能低下 骨粗鬆症',sub:'ゾレドロン酸35・BP30・デノスマブ制限なし',action:()=>{goto('scr-renal')}},
   {name:'腎機能低下 DVT DOAC',sub:'エドキサバン・リバーロキサバン・eGFR減量',action:()=>{goto('scr-renal')}},
   {name:'プレガバリン ミロガバリン 腎',sub:'eGFR60以上通常量・30以下禁忌',action:()=>{goto('scr-renal')}},
@@ -1876,6 +1923,128 @@ function copySpineRx(e, dKey, si) {
     setTimeout(() => { if(btn) { btn.textContent = '処方文例をコピー'; btn.classList.remove('success'); } }, 2000);
   });
 }
+
+// ========= CASE QUIZ =========
+(function(){
+const D = {
+a: [
+{p:["78歳女性、大腿骨頸部骨折・人工骨頭置換術後2週","腰椎YAM 62%、eGFR 58","食道疾患なし、心筋梗塞・脳卒中の既往なし"],s:[
+{q:"骨粗鬆症の薬物治療は?",o:[["開始する","best","大腿骨近位部の脆弱性骨折あり。骨密度によらず開始対象。"],["経過観察","ng","骨折既往は再骨折の最大のリスク因子。"]]},
+{q:"最初に選ぶ薬は?",o:[["テリパラチド","best","骨折直後の高リスク例。骨形成促進薬を先行する(anabolic first)。"],["ロモソズマブ","best","心血管既往がなければ選択肢。12か月後に抗吸収薬へ繋ぐ。"],["アレンドロネート(経口)","ok","有効だが、高リスク例では骨形成促進薬の先行を検討する。"],["活性型ビタミンD単独","ng","高リスク例には力不足。"]]},
+{q:"骨形成促進薬の終了後は?",o:[["抗吸収薬(デノスマブまたはBP)へ切替","best","切替により骨密度上昇と骨折抑制効果が維持される。"],["終了して経過観察","ng","逐次治療がないと骨密度が低下する。"],["同じ薬を延長","ng","テリパラチドは投与期間に上限がある(24か月)。"]]}]},
+{p:["66歳女性、閉経後","骨折歴なし、腰椎YAM 74%","母が大腿骨近位部骨折","eGFR 80、食道疾患・VTE歴なし"],s:[
+{q:"薬物治療は?",o:[["開始する","best","YAM 70%超80%未満で、大腿骨近位部骨折の家族歴あり。ガイドライン2025の開始基準に該当(図4-2)。"],["経過観察","ng","開始基準に該当している。"]]},
+{q:"選ぶ薬は?",o:[["ラロキシフェン","best","骨量減少例で椎体骨折抑制が報告されている薬の1つ。VTE歴がないことを確認済み。"],["ゾレドロン酸","best","骨量減少例で椎体骨折抑制が報告されている薬の1つ。eGFR 80で可。"],["アレンドロネート/リセドロネート","ok","無効ではない。ただし、この条件での臨床効果は確認されていない。"],["ロモソズマブ","ng","骨折歴のない中等度リスクには過剰。"]]}]},
+{p:["72歳女性","脆弱性骨折なし","腰椎YAM 85%、大腿骨頸部YAM 88%","家族歴なし、FRAX 8%"],s:[
+{q:"薬物治療は?",o:[["開始しない","best","どの基準にも非該当。YAM 80%以上でも、危険因子の管理・生活指導・定期検査は続ける。"],["開始する","ng","基準外で過剰治療。"]]}]},
+{p:["81歳女性","多発椎体骨折(3椎体、うち1椎体は新鮮)","腰椎YAM 55%、eGFR 62","2年前に心筋梗塞"],s:[
+{q:"薬物治療は?",o:[["開始する","best","椎体骨折あり。しかも多発の高リスク。"],["経過観察","ng","再骨折リスクが非常に高い。"]]},
+{q:"選ぶ薬は?",o:[["テリパラチド","best","高リスク。心血管リスクの懸念があるロモソズマブを避けられる。"],["アバロパラチド","ok","高リスクで選択肢になる。血圧・脈拍の変動に注意。"],["アレンドロネート","ok","有効だが、高リスクでは立ち上がりが遅い。"],["ロモソズマブ","ng","心筋梗塞の既往は避ける。"]]}]},
+{p:["74歳女性","椎体骨折1椎体、腰椎YAM 68%","活動性の逆流性食道炎","eGFR 28、補正Ca 9.0 mg/dL"],s:[
+{q:"薬物治療は?",o:[["開始する","best","椎体骨折あり。"],["経過観察","ng","再骨折リスクが高い。"]]},
+{q:"選ぶ薬は?",o:[["デノスマブ","best","腎機能に左右されにくい。低Ca血症には注意。"],["ラロキシフェン","ok","椎体骨折抑制あり。VTEなどに注意。重度腎障害は慎重投与。"],["アレンドロネート(経口)","ng","活動性の食道炎とeGFR低値で避ける。"],["ゾレドロン酸(点滴)","ng","CrCl 35未満は禁忌。"]]},
+{q:"デノスマブ開始時に必須の対応は?",o:[["血清補正Ca確認とCa・ビタミンD補充","best","腎機能低下例は特に低Ca血症に注意。開始後も血清Caを測定する。腎機能障害では活性型ビタミンD3を使い、Ca補充は必要性を判断する。"],["BPを同時に併用","ng","通常は併用しない。"],["間隔延長は自己判断でよい","ng","遅延や中止で骨密度低下と骨折リスク上昇が起きる。"]]}]},
+{p:["59歳女性、閉経後5年","骨折歴なし、腰椎YAM 69%","2年前に深部静脈血栓症","eGFR 90、食道疾患なし"],s:[
+{q:"薬物治療は?",o:[["開始する","best","YAM 70%以下で開始対象。"],["経過観察","ng","基準に該当している。"]]},
+{q:"選ぶ薬は?",o:[["アレンドロネート","best","VTEの問題がなく、経口BPが標準。"],["デノスマブ","ok","使えるが、長期継続が前提になる。"],["ラロキシフェン","ng","VTE既往があり避ける。"],["女性ホルモン薬","ng","VTEリスクを上げる。"]]}]},
+{p:["72歳男性","軽い転倒で新規の椎体骨折","腰椎YAM 60%、eGFR 70","ステロイド・ADT歴なし"],s:[
+{q:"最初にやることは?",o:[["続発性骨粗鬆症の除外","best","男性は続発性の頻度が高い。Ca、PTH、25OHD、性腺・甲状腺機能などを確認。"],["原因検索なしでBPを処方","ok","治療自体は必要だが、原因検索を省かない。"],["経過観察","ng","椎体骨折があり治療対象。"]]},
+{q:"選ぶ薬は?",o:[["アレンドロネート/リセドロネート","best","男性にも適応がある。"],["テリパラチド","ok","高リスクなら選択肢。"],["ラロキシフェン","ng","閉経後女性が対象。"]]}]},
+{p:["77歳女性","アレンドロネート35mg週1回を5年内服中","新規の椎体骨折、BMDは横ばい","eGFR 55"],s:[
+{q:"最初に確認すべきは?",o:[["服薬状況と続発性要因","best","治療中の新規骨折は、治療を見直すサイン。服用法(起床時・水のみ・30分は臥位不可)も確認する。"],["すぐ別の薬へ変更","ng","服薬不良が原因なら次の薬も同じ結果になる。"],["年齢的に仕方がないので継続","ng","治療中の骨折は高リスクのサイン。"]]},
+{q:"次の一手は?",o:[["ロモソズマブ","best","長期BP後でも腰椎・大腿骨近位部の骨密度が上昇した報告がある。"],["テリパラチド","ok","腰椎は上昇するが、長期BP後は大腿骨近位部の骨密度が低下した報告がある。"],["別の経口BPへ変更","ng","同クラス内の変更では上積みが乏しい。"],["活性型ビタミンDを追加","ok","併用はあるが決め手にならない。"]]},
+{q:"ロモソズマブ開始前に必ず確認することは?",o:[["心筋梗塞・脳卒中の既往","best","重篤な心血管イベントの不均衡が報告されているため。"],["腎機能のみ","ng","それだけでは不十分。"],["特になし","ng","禁忌の確認が必要。"]]}]}
+],
+b: [
+{p:["76歳女性、大腿骨近位部骨折後","テリパラチド連日製剤を投与上限まで完遂","eGFR 60、食道疾患なし、通院は安定","腰椎YAM 66%"],s:[
+{q:"終了後の方針は?",o:[["抗吸収薬へ切り替える","best","終了後は骨密度が低下する。抗吸収薬への変更で維持できる。"],["終了して経過観察","ng","中止後に骨密度が低下しやすい。"],["活性型ビタミンD単独","ng","維持療法としては力不足。"]]},
+{q:"切替薬は?",o:[["デノスマブ","best","テリパラチドからの変更で骨密度がさらに上昇した。ただし継続が前提。"],["アレンドロネート/ゾレドロン酸","best","骨密度が上昇し、骨折抑制効果は維持された。継続に不安がある例で選びやすい。"],["ラロキシフェン","ng","高リスク例の維持療法には力不足。"]]},
+{q:"切替のタイミングは?",o:[["空白を作らず直ちに","best","間が空くと骨密度が落ちる。終了時に次を決めておく。"],["半年様子を見てから","ng","その間に骨量が失われる。"]]}]},
+{p:["81歳女性、多発椎体骨折","ロモソズマブを12か月投与し終了","来院が不規則で、半年ごとの受診を守れるか不明","eGFR 55"],s:[
+{q:"次の薬は?",o:[["アレンドロネートなどのBP","best","ロモソズマブ終了後のアレンドロネートで骨密度が上昇し、非椎体骨折抑制が増強した。受診間隔にも左右されにくい。"],["デノスマブ","ok","骨密度は上昇し、椎体骨折抑制は維持された。ただし中断するとリバウンドの危険。"],["終了して経過観察","ng","終了後に骨量が失われる。"]]},
+{q:"ロモソズマブの標準的な投与期間は?",o:[["12か月","best","12か月で終了し、抗吸収薬へ繋ぐ。"],["24か月","ng","上限は12か月。"],["6か月","ng","12か月が標準。"]]}]},
+{p:["79歳女性、デノスマブを5年継続中","施設入所となり、半年ごとの注射が続けにくくなる見込み","eGFR 45"],s:[
+{q:"注射を続けられない場合は?",o:[["他の抗吸収薬(BP)へ切り替える","best","中止後は骨密度低下と椎体骨折の増加がみられるため、他の骨吸収抑制薬の使用が推奨される。"],["単に中止する","ng","リバウンドで椎体骨折が増える危険。"],["活性型ビタミンDへ変更","ng","骨吸収抑制として不十分。"]]},
+{q:"切替BPの選択は?",o:[["ゾレドロン酸(点滴)","best","eGFR 45でCrCl 35以上なら可。施設では管理しやすい。"],["経口BP","best","服薬と姿勢を守れるなら可。"]]},
+{q:"切替後のフォローは?",o:[["骨密度と骨吸収マーカーで評価を続ける","best","ゾレドロン酸へ変更して2年後に、骨密度が有意に低下した報告がある。切替時期による差も示されていない。"],["切替後は評価不要","ng","切替後も骨密度が下がりうる。"]]}]},
+{p:["74歳女性、テリパラチド終了","活動性の逆流性食道炎","eGFR 25"],s:[
+{q:"次の薬は?",o:[["デノスマブ","best","腎機能に左右されにくい。低Ca血症に注意(Ca・ビタミンD併用)。"],["ゾレドロン酸","ng","CrCl 35未満は禁忌。"],["経口BP","ng","腎機能・食道炎の両面で避ける。"]]}]},
+{p:["77歳女性","アレンドロネート5年内服中に新規椎体骨折","大腿骨頸部YAM 58%","心筋梗塞・脳卒中の既往なし"],s:[
+{q:"骨形成促進薬を選ぶなら?",o:[["ロモソズマブ","best","長期BP後でも腰椎・大腿骨近位部の骨密度が上昇した。ただし前治療なしの例より効果は弱まる傾向。"],["テリパラチド","ok","腰椎は上昇するが、大腿骨近位部の骨密度は低下した報告がある。"],["同じBPを継続","ng","治療中の骨折は高リスクのサイン。"]]},
+{q:"ロモソズマブ12か月終了後は?",o:[["デノスマブまたはBPへ切替","best","アレンドロネートへの変更で骨密度が上昇し、デノスマブへの変更で椎体骨折抑制が維持された。"],["終了","ng","骨量が失われる。"]]}]},
+{p:["80歳女性","デノスマブを3年継続中に新規椎体骨折","主治医はテリパラチドへの変更を検討している"],s:[
+{q:"デノスマブからテリパラチドへ切り替えた場合に報告されているのは?",o:[["骨代謝マーカーの上昇と一過性の骨密度低下","best","デノスマブからテリパラチドへの逐次療法で報告されている。"],["骨密度の速やかな上昇","ng","一過性に低下しうる。"],["変化なし","ng","低下が報告されている。"]]},
+{q:"テリパラチドとデノスマブの併用は?",o:[["原則として保険適用外","best","併用で骨密度上昇が優れたRCTはあるが、骨折率を評価する症例数は足りていない。"],["保険診療で通常可能","ng","原則として保険適用外。"]]}]}
+]
+};
+const LV = {best:['最適',1], ok:['許容',0.5], ng:['避ける',0]};
+let deck='a', ord=[], ci=0, si=0, ans=-1, sc=0, perm=[];
+const main = () => document.getElementById('qz-main');
+function shuf(n){
+  const a = [...Array(n).keys()];
+  for(let i = n-1; i > 0; i--){ const j = Math.floor(Math.random()*(i+1)); [a[i], a[j]] = [a[j], a[i]]; }
+  return a;
+}
+function total(){ return D[deck].reduce((t,c)=>t+c.s.length,0); }
+function newPerm(){
+  if(ci < ord.length) perm = shuf(D[deck][ord[ci]].s[si].o.length);
+}
+function reset(d){
+  deck = d; ord = shuf(D[d].length); ci = 0; si = 0; ans = -1; sc = 0; newPerm();
+  document.querySelectorAll('#scr-quiz .qz-tab').forEach(b => b.classList.toggle('on', b.dataset.d === d));
+  render(true);
+}
+function render(top){
+  const el = main();
+  if(ci >= ord.length){
+    el.innerHTML = '<div class="qz-end"><div style="font-size:13px;color:var(--text2)">最終スコア</div><div class="qz-end-n">'+sc.toFixed(1)+' / '+total()+'</div><button class="qz-next" data-a="reset">もう一度</button></div>';
+  } else {
+    const c = D[deck][ord[ci]], s = c.s[si];
+    let h = '<div class="qz-meta"><span>症例 '+(ci+1)+'/'+ord.length+'</span><span>スコア '+sc.toFixed(1)+'</span></div>';
+    h += '<div class="qz-pt">'+c.p.map(x=>'<p>'+x+'</p>').join('')+'</div>';
+    h += '<div class="qz-q">'+s.q+'</div>';
+    perm.forEach(i=>{
+      const o = s.o[i];
+      let cls = 'qz-opt';
+      if(ans >= 0){
+        if(i === ans) cls += ' ans '+o[1];
+        else if(o[1] === 'best') cls += ' best';
+      }
+      h += '<button class="'+cls+'" data-o="'+i+'">'+o[0]+'</button>';
+    });
+    if(ans >= 0){
+      const o = s.o[ans];
+      h += '<div class="qz-fb '+o[1]+'"><b>'+LV[o[1]][0]+'</b>　'+o[2]+'</div>';
+      if(o[1] !== 'best'){
+        const bs = s.o.filter(x=>x[1]==='best');
+        h += '<div class="qz-rec">より適切: '+bs.map(x=>x[0]).join(' / ')+'。'+bs[0][2]+'</div>';
+      }
+      const last = si === c.s.length-1;
+      h += '<button class="qz-next" data-a="next">'+(last ? (ci === ord.length-1 ? '結果を見る' : '次の症例') : '次の判断')+'</button>';
+    }
+    el.innerHTML = h;
+  }
+  if(top) document.getElementById('qz-body').scrollTop = 0;
+}
+document.getElementById('scr-quiz').addEventListener('click', e => {
+  const t = e.target.closest('button'); if(!t) return;
+  if(t.dataset.d){ reset(t.dataset.d); }
+  else if(t.dataset.o !== undefined){
+    if(ans >= 0) return;
+    ans = +t.dataset.o;
+    sc += LV[D[deck][ord[ci]].s[si].o[ans][1]][1];
+    render(false);
+  }
+  else if(t.dataset.a === 'next'){
+    const c = D[deck][ord[ci]]; ans = -1;
+    if(si < c.s.length-1) si++; else { ci++; si = 0; }
+    newPerm();
+    render(true);
+  }
+  else if(t.dataset.a === 'reset'){ reset(deck); }
+});
+reset('a');
+})();
 
 // ========= INIT =========
 document.addEventListener('DOMContentLoaded', () => {
