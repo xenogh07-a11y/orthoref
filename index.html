@@ -322,6 +322,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic UI'
         <div class="tip-foot"><span class="tip-src" id="tip-src"></span><button class="tip-next" onclick="showTip()">次の豆知識 ›</button></div>
       </div>
     </div>
+    <div style="text-align:center;font-size:11px;color:var(--text3);padding:10px 0 4px">OrthoRef v21（この表示が出ていれば最新版です）</div>
   </div>
 </div>
 
@@ -2065,7 +2066,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if(btn) btn.addEventListener('click',()=>localStorage.setItem('banner-closed','1'));
   }
   if('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js').catch(() => {});
+    navigator.serviceWorker.register('sw.js').then((reg) => { reg.update(); }).catch(() => {});
   }
 });
 </script>
