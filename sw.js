@@ -1,8 +1,9 @@
-const CACHE = 'orthoref-v22';
+const CACHE = 'orthoref-v23';
 const ASSETS = [
   '/orthoref/',
   '/orthoref/index.html',
-  '/orthoref/manifest.json'
+  '/orthoref/manifest.json',
+  '/orthoref/kampo.js'
 ];
 
 self.addEventListener('install', (e) => {
